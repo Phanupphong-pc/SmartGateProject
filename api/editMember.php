@@ -18,18 +18,20 @@ if ($conn->connect_error) {
     exit();
 }
 
-// รับค่าจาก React Native
-$old_employee_id = isset($_POST['old_employee_id']) ? trim($_POST['old_employee_id']) : '';
-$card_uid = isset($_POST['card_uid']) ? trim($_POST['card_uid']) : '';
-$employee_id = isset($_POST['employee_id']) ? trim($_POST['employee_id']) : '';
-$firstname = isset($_POST['firstname']) ? trim($_POST['firstname']) : '';
-$lastname = isset($_POST['lastname']) ? trim($_POST['lastname']) : '';
-$nickname = isset($_POST['nickname']) ? trim($_POST['nickname']) : '';
-$department = isset($_POST['department']) ? trim($_POST['department']) : '';
-$phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
-$image = isset($_POST['image']) ? trim($_POST['image']) : '';
-$status = isset($_POST['status']) ? trim($_POST['status']) : '';
-$create_date = isset($_POST['create_date']) ? trim($_POST['create_date']) : '';
+// 💡 ดึงข้อมูลแบบ JSON Body (แทน $_POST เดิม)
+$data = json_decode(file_get_contents("php://input"), true);
+
+$old_employee_id = isset($data['old_employee_id']) ? trim($data['old_employee_id']) : '';
+$card_uid = isset($data['card_uid']) ? trim($data['card_uid']) : '';
+$employee_id = isset($data['employee_id']) ? trim($data['employee_id']) : '';
+$firstname = isset($data['firstname']) ? trim($data['firstname']) : '';
+$lastname = isset($data['lastname']) ? trim($data['lastname']) : '';
+$nickname = isset($data['nickname']) ? trim($data['nickname']) : '';
+$department = isset($data['department']) ? trim($data['department']) : '';
+$phone = isset($data['phone']) ? trim($data['phone']) : '';
+$image = isset($data['image']) ? trim($data['image']) : '';
+$status = isset($data['status']) ? trim($data['status']) : '';
+$create_date = isset($data['create_date']) ? trim($data['create_date']) : '';
 
 if (empty($old_employee_id) || empty($employee_id) || empty($firstname) || empty($lastname)) {
     echo json_encode(["status" => "error", "message" => "กรอกข้อมูลสำคัญไม่ครบถ้วน"]);
