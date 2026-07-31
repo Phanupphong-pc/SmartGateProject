@@ -3,7 +3,7 @@ import { View } from 'react-native'
 
 const dashboard = () => {
   return (
-    <View>Dashboard</View>
+    <View>Dashboard 447447447447</View>
   )
 }
 
