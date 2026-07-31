@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
-// 💡 ชี้ไปที่โฟลเดอร์ api
+// 💡 1. [เพิ่ม] กำหนดค่า BASE_URL
 const BASE_URL = "http://10.79.230.211/SmartGate/api";
 
 export default function MemberEdit() {
     const [searchId, setSearchId] = useState<string>("");
     const [old_employee_id, setOldEmployeeId] = useState<string>("");
 
-    // State ชื่อตัวแปรแบบเดียวกับ history.tsx (snake_case)
+    // State ตัวแปร snake_case
     const [card_uid, setCard_uid] = useState<string>("");
     const [employee_id, setEmployee_id] = useState<string>("");
     const [firstname, setFirstName] = useState<string>("");
@@ -22,6 +22,21 @@ export default function MemberEdit() {
     const [edit_date, setEditDate] = useState<string>("");
 
     const [isFound, setIsFound] = useState<boolean>(false);
+
+    // 💡 2. [ย้ายขึ้นมาบนสุด] ฟังก์ชันแสดงวันเวลาปัจจุบัน (รูปแบบ YYYY-MM-DD HH:mm:ss)
+    const getCurrentDate = () => {
+        const now = new Date();
+
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");
+
+        const hour = String(now.getHours()).padStart(2, "0");
+        const minute = String(now.getMinutes()).padStart(2, "0");
+        const second = String(now.getSeconds()).padStart(2, "0");
+
+        return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    };
 
     // 1. ค้นหาพนักงาน
     const searchMember = async (): Promise<void> => {
@@ -39,7 +54,6 @@ export default function MemberEdit() {
             if (json.status === "success") {
                 setOldEmployeeId(json.data.employee_id || "");
 
-                // แมปค่าเข้า State ตัวแปรใหม่
                 setCard_uid(json.data.card_uid || "");
                 setEmployee_id(json.data.employee_id || "");
                 setFirstName(json.data.firstname || "");
@@ -49,8 +63,12 @@ export default function MemberEdit() {
                 setPhone(json.data.phone || "");
                 setImage(json.data.image || "");
                 setStatus(json.data.status || "");
-                setCreateDate(json.data.create_date || "");
-                setEditDate(json.data.edit_date || "");
+
+                // 💡 3. [แก้] ถ้า DB ไม่มี create_date ให้ใช้วันเวลาปัจจุบันแทน
+                setCreateDate(json.data.create_date || getCurrentDate());
+
+                // 💡 4. [แก้] ตั้งค่าวันที่แก้ไขเป็นเวลาปัจจุบัน
+                setEditDate(getCurrentDate());
 
                 setIsFound(true);
             } else {
@@ -62,12 +80,16 @@ export default function MemberEdit() {
         }
     };
 
-    // 2. บันทึกการแก้ไข (ส่งแบบ JSON เหมือน history.tsx)
+    // 2. บันทึกการแก้ไข
     const updateMember = async (): Promise<void> => {
         if (!employee_id.trim() || !firstname.trim() || !lastname.trim()) {
             Alert.alert("แจ้งเตือน", "กรุณากรอกข้อมูลสำคัญให้ครบถ้วน");
             return;
         }
+
+        // 💡 5. [เพิ่ม] ดึงเวลาปัจจุบันเพื่อบันทึกเป็น edit_date ล่าสุด ณ วินาทีที่กดบันทึก
+        const currentNow = getCurrentDate();
+        setEditDate(currentNow);
 
         try {
             const response = await fetch(`${BASE_URL}/editMember.php`, {
@@ -87,7 +109,7 @@ export default function MemberEdit() {
                     image,
                     status,
                     create_date,
-                    edit_date,
+                    edit_date: currentNow, // ส่งเวลาปัจจุบันไปยังฝั่ง PHP
                 }),
             });
 
@@ -105,7 +127,7 @@ export default function MemberEdit() {
         }
     };
 
-    // 3. ลบข้อมูล (ส่งแบบ JSON เหมือน history.tsx)
+    // 3. ลบข้อมูล
     const deleteMember = async (): Promise<void> => {
         Alert.alert("ยืนยันการลบ", `คุณต้องการลบพนักงานรหัส ${old_employee_id} ใช่หรือไม่?`, [
             { text: "ยกเลิก", style: "cancel" },
@@ -187,10 +209,19 @@ export default function MemberEdit() {
                     <TextInput style={styles.input} value={status} onChangeText={setStatus} />
 
                     <Text style={styles.label}>10. วันที่สร้าง (Create Date):</Text>
-                    <TextInput style={[styles.input, styles.disabledInput]} value={create_date} editable={false} />
+                    <TextInput
+                        style={[styles.input, styles.disabledInput]}
+                        value={create_date}
+                        editable={false}
+                    />
 
                     <Text style={styles.label}>11. วันที่แก้ไขล่าสุด (Edit Date):</Text>
-                    <TextInput style={[styles.input, styles.disabledInput]} value={edit_date} editable={false} placeholder="ระบบจะบันทึกให้อัตโนมัติ" />
+                    <TextInput
+                        style={[styles.input, styles.disabledInput]}
+                        value={edit_date}
+                        editable={false}
+                        placeholder="ระบบจะบันทึกให้อัตโนมัติ"
+                    />
 
                     {/* ปุ่มบันทึกการแก้ไข */}
                     <View style={{ marginTop: 15 }}>
@@ -251,4 +282,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#f9f9f9',
         borderRadius: 5,
     },
+
 });
