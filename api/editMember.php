@@ -1,6 +1,12 @@
 <?php
-header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Content-Type: application/json; charset=UTF-8");
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    exit(0);
+}
 
 error_reporting(0);
 ini_set('display_errors', 0);
@@ -21,6 +27,7 @@ if ($conn->connect_error) {
 // 💡 ดึงข้อมูลแบบ JSON Body (แทน $_POST เดิม)
 $data = json_decode(file_get_contents("php://input"), true);
 
+// รับค่าจาก React Native
 $old_employee_id = isset($data['old_employee_id']) ? trim($data['old_employee_id']) : '';
 $card_uid = isset($data['card_uid']) ? trim($data['card_uid']) : '';
 $employee_id = isset($data['employee_id']) ? trim($data['employee_id']) : '';
