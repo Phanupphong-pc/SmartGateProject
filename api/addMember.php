@@ -2,7 +2,7 @@
 
 header("Content-Type: application/json");
 
-$conn = new mysqli("localhost","root","","regist");
+$conn = new mysqli("localhost", "root", "", "regist");
 
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -32,14 +32,14 @@ $stmt->bind_param(
     $phone
 );
 
-if($stmt->execute()){
+if ($stmt->execute()) {
     echo json_encode([
-        "status"=>"success",
-        "message"=>"บันทึกข้อมูลสำเร็จ"
+        "status" => "success",
+        "message" => "บันทึกข้อมูลสำเร็จ"
     ]);
-}else{
+} else {
     echo json_encode([
-        "status"=>"error",
-        "message"=>"บันทึกไม่สำเร็จ"
+        "status" => "error",
+        "message" => "บันทึกไม่สำเร็จ"
     ]);
 }

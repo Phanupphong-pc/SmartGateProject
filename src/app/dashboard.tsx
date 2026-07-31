@@ -1,6 +1,6 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 function Dashboard() {
     const [date, setDate] = useState(new Date());
@@ -17,12 +17,12 @@ function Dashboard() {
     };
 
     return (
-        <View style={{ padding: 20 }}>
-            <Text style={{ fontSize: 20, marginBottom: 20 }}>Dashboard</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Dashboard</Text>
 
             <Button onPress={showDatepicker} title="เลือกวันที่" />
 
-            <Text style={{ marginTop: 10 }}>
+            <Text style={styles.dateText}>
                 วันที่เลือก: {date.toLocaleDateString('th-TH')}
             </Text>
 
@@ -39,5 +39,18 @@ function Dashboard() {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+    },
+    title: {
+        fontSize: 20,
+        marginBottom: 20,
+    },
+    dateText: {
+        marginTop: 10,
+    },
+});
 
 export default Dashboard;

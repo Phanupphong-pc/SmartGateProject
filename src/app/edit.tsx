@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 // 💡 กำหนด BASE_URL ชี้ไปยังโฟลเดอร์ api
-const BASE_URL = "http://172.21.233.8/api";
+const BASE_URL = "http://10.79.230.211/api/editMember.php";
 
 export default function MemberEdit() {
     const [searchId, setSearchId] = useState<string>("");

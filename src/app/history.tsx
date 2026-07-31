@@ -29,7 +29,7 @@ export default function History() {
     const now = new Date().toISOString().slice(0, 19).replace("T", " ");
 
     try {
-      const response = await fetch("http://IP/", {
+      const response = await fetch("http://10.79.230.211/api/addMember.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
