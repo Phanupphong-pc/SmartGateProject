@@ -9,6 +9,21 @@ import {
 } from "react-native";
 
 export default function History() {
+  // ฟังก์ชันแสดงวันเวลาปัจจุบัน
+  const getCurrentDate = () => {
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+
+    const hour = String(now.getHours()).padStart(2, "0");
+    const minute = String(now.getMinutes()).padStart(2, "0");
+    const second = String(now.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  };
+
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [cardId, setCardId] = useState("");
@@ -17,8 +32,9 @@ export default function History() {
   const [department, setDepartment] = useState("");
   const [phone, setPhone] = useState("");
   const [image, setImage] = useState("");
-  const [createDate, setCreateDate] = useState("");
-  const [editDate, setEditDate] = useState("");
+
+  // แสดงวันที่ทันทีเมื่อเปิดหน้า
+  const [createDate, setCreateDate] = useState(getCurrentDate());
 
   const saveData = async () => {
     if (firstname === "" || lastname === "" || employeeId === "") {
@@ -26,7 +42,7 @@ export default function History() {
       return;
     }
 
-    const now = new Date().toISOString().slice(0, 19).replace("T", " ");
+    const now = getCurrentDate();
 
     try {
       const response = await fetch("http://IP/", {
@@ -43,7 +59,7 @@ export default function History() {
           department,
           phone,
           image,
-          createDate: now,
+          createDate,
           editDate: now,
         }),
       });
@@ -61,8 +77,9 @@ export default function History() {
         setDepartment("");
         setPhone("");
         setImage("");
-        setCreateDate("");
-        setEditDate("");
+
+        // อัปเดตวันที่ใหม่
+        setCreateDate(getCurrentDate());
       } else {
         Alert.alert("ผิดพลาด", result.message);
       }
@@ -123,6 +140,7 @@ export default function History() {
         value={phone}
         onChangeText={setPhone}
       />
+
       <TextInput
         style={styles.input}
         placeholder="URL รูปภาพ"
@@ -165,12 +183,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 12,
     marginBottom: 15,
+    fontSize: 16,
   },
 
   button: {
     backgroundColor: "#007AFF",
     padding: 15,
     borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 20,
   },
 
   buttonText: {
