@@ -32,9 +32,9 @@ export default function Layout() {
                 }}
             />
             <Tabs.Screen
-                name="attendance"
+                name="edit"
                 options={{
-                    title: 'Attendance',
+                    title: 'Edit',
                     tabBarIcon: ({ color }) => <Ionicons name="footsteps"
                         size={24} color={color} />,
 
