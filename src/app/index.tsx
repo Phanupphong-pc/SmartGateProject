@@ -1,8 +1,9 @@
 import React from 'react'
+import { View } from 'react-native'
 
 function index() {
     return (
-        <div>index</div>
+        <View>index</View>
     )
 }
 
