@@ -137,13 +137,6 @@ export default function History() {
         editable={false}
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="วันที่แก้ไข"
-        value={editDate}
-        editable={false}
-      />
-
       <TouchableOpacity style={styles.button} onPress={saveData}>
         <Text style={styles.buttonText}>บันทึกข้อมูล</Text>
       </TouchableOpacity>
