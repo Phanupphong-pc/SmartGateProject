@@ -6,6 +6,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 
 export default function History() {
@@ -37,7 +39,13 @@ export default function History() {
   const [create_date, setCreateDate] = useState(getCurrentDate());
 
   const saveData = async () => {
-    if (firstname === "" || lastname === "" || employee_id === "") {
+    if (firstname === "" || 
+        lastname === "" || 
+        employee_id === ""|| 
+        card_uid === ""||
+        nickname ==="" ||
+        department ===""||
+        phone === "" ) {
       Alert.alert("แจ้งเตือน", "กรุณากรอกข้อมูลให้ครบ");
       return;
     }
@@ -59,9 +67,10 @@ export default function History() {
           department,
           phone,
           image,
+          status: "active",
           create_date,
           edit_date: now,
-        }),
+}),
       });
 
       const result = await response.json();
@@ -89,8 +98,24 @@ export default function History() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+  >
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: 80 }}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
+    >
       <Text style={styles.title}>เพิ่มข้อมูลพนักงาน</Text>
+
+      <TextInput
+        style={styles.carduid}
+        placeholder="เลขบัตรประจำตัวพนักงาน"
+        value={card_uid}
+        onChangeText={setCard_uid}
+      />
 
       <TextInput
         style={styles.input}
@@ -120,12 +145,6 @@ export default function History() {
         onChangeText={setEmployee_id}
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="เลขบัตรประชาชน"
-        value={card_uid}
-        onChangeText={setCard_uid}
-      />
 
       <TextInput
         style={styles.input}
@@ -159,6 +178,7 @@ export default function History() {
         <Text style={styles.buttonText}>บันทึกข้อมูล</Text>
       </TouchableOpacity>
     </ScrollView>
+  </KeyboardAvoidingView>
   );
 }
 
@@ -200,4 +220,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
+  carduid: {
+    backgroundColor: "#ffffffff",
+    borderWidth: 1,
+    borderColor: "#ff0000ff",
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 15,
+    fontSize: 16,
+  }
+
 });
