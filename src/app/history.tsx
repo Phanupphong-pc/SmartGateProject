@@ -1,136 +1,189 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
+import {
+    Alert,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+} from "react-native";
 
-const History = () => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+export default function History() {
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [cardId, setCardId] = useState("");
   const [employeeId, setEmployeeId] = useState("");
   const [nickname, setNickname] = useState("");
   const [department, setDepartment] = useState("");
   const [phone, setPhone] = useState("");
   const [image, setImage] = useState("");
-  const [status, setStatus] = useState("");
+  const [createDate, setCreateDate] = useState("");
+  const [editDate, setEditDate] = useState("");
+
+  const saveData = async () => {
+    if (firstname === "" || lastname === "" || employeeId === "") {
+      Alert.alert("แจ้งเตือน", "กรุณากรอกข้อมูลให้ครบ");
+      return;
+    }
+
+    const now = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+    try {
+      const response = await fetch("http://IP/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstname,
+          lastname,
+          cardId,
+          employeeId,
+          nickname,
+          department,
+          phone,
+          image,
+          createDate: now,
+          editDate: now,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.status === "success") {
+        Alert.alert("สำเร็จ", result.message);
+
+        setFirstName("");
+        setLastName("");
+        setCardId("");
+        setEmployeeId("");
+        setNickname("");
+        setDepartment("");
+        setPhone("");
+        setImage("");
+        setCreateDate("");
+        setEditDate("");
+      } else {
+        Alert.alert("ผิดพลาด", result.message);
+      }
+    } catch (error) {
+      Alert.alert("Error", "ไม่สามารถเชื่อมต่อ Server");
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>History Page</Text>
+      <Text style={styles.title}>เพิ่มข้อมูลพนักงาน</Text>
 
-      <View style={styles.inputContainer}>
-        <Text>ชื่อจริง:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="กรอกชื่อจริง"
-          value={firstname}
-          onChangeText={setFirstname}
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="ชื่อ"
+        value={firstname}
+        onChangeText={setFirstName}
+      />
 
-      <View style={styles.inputContainer}>
-        <Text>นามสกุล:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="กรอกนามสกุล"
-          value={lastname}
-          onChangeText={setLastname}
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="นามสกุล"
+        value={lastname}
+        onChangeText={setLastName}
+      />
 
-      <View style={styles.inputContainer}>
-        <Text>เลขบัตรประชาชน (Card ID):</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="กรอก Card ID"
-          value={cardId}
-          onChangeText={setCardId}
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="ชื่อเล่น"
+        value={nickname}
+        onChangeText={setNickname}
+      />
 
-      <View style={styles.inputContainer}>
-        <Text>รหัสพนักงาน (Employee ID):</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="กรอก Employee ID"
-          value={employeeId}
-          onChangeText={setEmployeeId}
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="รหัสพนักงาน"
+        value={employeeId}
+        onChangeText={setEmployeeId}
+      />
 
-      <View style={styles.inputContainer}>
-        <Text>ชื่อเล่น:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="กรอกชื่อเล่น"
-          value={nickname}
-          onChangeText={setNickname}
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="เลขบัตรประชาชน"
+        value={cardId}
+        onChangeText={setCardId}
+      />
 
-      <View style={styles.inputContainer}>
-        <Text>แผนก (Department):</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="กรอกแผนก"
-          value={department}
-          onChangeText={setDepartment}
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="แผนก"
+        value={department}
+        onChangeText={setDepartment}
+      />
 
-      <View style={styles.inputContainer}>
-        <Text>เบอร์โทรศัพท์ (Phone):</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="กรอกเบอร์โทรศัพท์"
-          value={phone}
-          onChangeText={setPhone}
-          keyboardType="phone-pad"
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="เบอร์โทร"
+        value={phone}
+        onChangeText={setPhone}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="URL รูปภาพ"
+        value={image}
+        onChangeText={setImage}
+      />
 
-      <View style={styles.inputContainer}>
-        <Text>รูปภาพ (Image URL):</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="กรอก URL รูปภาพ"
-          value={image}
-          onChangeText={setImage}
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="วันที่สร้าง"
+        value={createDate}
+        editable={false}
+      />
 
-      <View style={styles.inputContainer}>
-        <Text>สถานะ (Status):</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="กรอกสถานะ"
-          value={status}
-          onChangeText={setStatus}
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="วันที่แก้ไข"
+        value={editDate}
+        editable={false}
+      />
+
+      <TouchableOpacity style={styles.button} onPress={saveData}>
+        <Text style={styles.buttonText}>บันทึกข้อมูล</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#fff",
+    padding: 20,
+    backgroundColor: "#f2f2f2",
   },
+
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 16,
+    textAlign: "center",
+    marginVertical: 20,
   },
-  inputContainer: {
-    marginBottom: 12,
-  },
+
   input: {
+    backgroundColor: "#fff",
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 6,
-    padding: 8,
-    marginTop: 4,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 15,
+  },
+
+  button: {
+    backgroundColor: "#007AFF",
+    padding: 15,
+    borderRadius: 10,
+  },
+
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 18,
   },
 });
-
-export default History;
