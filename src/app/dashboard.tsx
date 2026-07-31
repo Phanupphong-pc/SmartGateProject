@@ -1,10 +1,23 @@
 import React from 'react'
-import { View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 const dashboard = () => {
   return (
-    <View>Dashboard</View>
+    <View style={styles.container}>
+      <Text style={styles.text}>Dashboard</Text>
+    </View>
   )
 }
 
-export default dashboard
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 18,
+  },
+})
+
+export default dashboard

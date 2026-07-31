@@ -1,10 +1,23 @@
 import React from 'react'
-import { View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 const index = () => {
   return (
-    <View>index</View>
+    <View style={styles.container}>
+      <Text style={styles.text}>Index</Text>
+    </View>
   )
 }
 
-export default index
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 18,
+  },
+})
+
+export default index

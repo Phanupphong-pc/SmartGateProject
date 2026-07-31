@@ -1,10 +1,23 @@
 import React from 'react'
-import { View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 const attendance = () => {
     return (
-        <View>attendance</View>
+        <View style={styles.container}>
+            <Text style={styles.text}>Attendance</Text>
+        </View>
     )
 }
 
-export default attendance
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    text: {
+        fontSize: 18,
+    },
+})
+
+export default attendance
