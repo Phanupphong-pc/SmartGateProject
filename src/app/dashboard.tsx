@@ -3,9 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 const dashboard = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Dashboard</Text>
-    </View>
+    <View>Dashboard 447447447447</View>
   )
 }
 
@@ -20,4 +18,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default dashboard
+export default dashboard
