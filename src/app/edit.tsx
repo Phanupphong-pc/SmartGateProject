@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 // 💡 1. [เพิ่ม] กำหนดค่า BASE_URL
 const BASE_URL = "http://10.79.230.211/SmartGate/api";
@@ -206,8 +206,37 @@ export default function MemberEdit() {
                     <TextInput style={styles.input} value={image} onChangeText={setImage} />
 
                     <Text style={styles.label}>9. สถานะ (Status):</Text>
-                    <TextInput style={styles.input} value={status} onChangeText={setStatus} />
+                    <View style={styles.statusContainer}>
+                        <TouchableOpacity
+                            style={[
+                                styles.statusButton,
+                                status === 'Active' && styles.statusActiveBtn
+                            ]}
+                            onPress={() => setStatus('Active')}
+                        >
+                            <Text style={[
+                                styles.statusText,
+                                status === 'Active' && styles.statusActiveText
+                            ]}>
+                                Active
+                            </Text>
+                        </TouchableOpacity>
 
+                        <TouchableOpacity
+                            style={[
+                                styles.statusButton,
+                                status === 'Inactive' && styles.statusInactiveBtn
+                            ]}
+                            onPress={() => setStatus('Inactive')}
+                        >
+                            <Text style={[
+                                styles.statusText,
+                                status === 'Inactive' && styles.statusInactiveText
+                            ]}>
+                                Inactive
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                     <Text style={styles.label}>10. วันที่สร้าง (Create Date):</Text>
                     <TextInput
                         style={[styles.input, styles.disabledInput]}
@@ -282,5 +311,40 @@ const styles = StyleSheet.create({
         backgroundColor: '#f9f9f9',
         borderRadius: 5,
     },
+    statusContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 12,
+    },
+    statusButton: {
+        flex: 1,
+        paddingVertical: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        marginHorizontal: 4,
+    },
+    statusActiveBtn: {
+        backgroundColor: '#28a745', // สีเขียวเมื่อเลือก Active
+        borderColor: '#28a745',
+    },
+    statusInactiveBtn: {
+        backgroundColor: '#dc3545', // สีแดงเมื่อเลือก Inactive
+        borderColor: '#dc3545',
+    },
+    statusText: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#555',
+    },
+    statusActiveText: {
+        color: '#fff',
+    },
+    statusInactiveText: {
+        color: '#fff',
+    },
+
 
 });
