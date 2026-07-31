@@ -1,24 +1,32 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
-$conn = new mysqli("localhost","root","","regist");
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    exit(0);
+}
+
+$conn = new mysqli("localhost", "root", "", "smartgate");
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$firstname  = $data["firstname"] ?? "";
-$lastname   = $data["lastname"] ?? "";
-$cardId     = $data["cardId"] ?? "";
-$employeeId = $data["employeeId"] ?? "";
-$nickname   = $data["nickname"] ?? "";
+$firstname = $data["firstname"] ?? "";
+$lastname = $data["lastname"] ?? "";
+$card_uid = $data["card_uid"] ?? "";
+$employee_id = $data["employee_id"] ?? "";
+$nickname = $data["nickname"] ?? "";
 $department = $data["department"] ?? "";
-$phone      = $data["phone"] ?? "";
-$image      = $data["image"] ?? "";
-$createDate = $data["createDate"] ?? date("Y-m-d H:i:s");
-$editDate   = $data["editDate"] ?? date("Y-m-d H:i:s");
+$phone = $data["phone"] ?? "";
+$image = $data["image"] ?? "";
+$create_date = $data["create_date"] ?? date("Y-m-d H:i:s");
+$edit_date = $data["edit_date"] ?? date("Y-m-d H:i:s");
 
 // ตรวจสอบข้อมูลที่จำเป็น
-if ($firstname == "" || $lastname == "" || $employeeId == "") {
+if ($firstname == "" || $lastname == "" || $employee_id == "") {
     echo json_encode([
         "status" => "error",
         "message" => "กรุณากรอกข้อมูลให้ครบ"
@@ -26,18 +34,18 @@ if ($firstname == "" || $lastname == "" || $employeeId == "") {
     exit();
 }
 
-$sql = "INSERT INTO employee
+$sql = "INSERT INTO memberlist
 (
     firstname,
     lastname,
-    cardId,
-    employeeId,
+    card_uid,
+    employee_id,
     nickname,
     department,
     phone,
     image,
-    createDate,
-    editDate
+    create_date,
+    edit_date
 )
 VALUES
 (
@@ -50,14 +58,14 @@ $stmt->bind_param(
     "ssssssssss",
     $firstname,
     $lastname,
-    $cardId,
-    $employeeId,
+    $card_uid,
+    $employee_id,
     $nickname,
     $department,
     $phone,
     $image,
-    $createDate,
-    $editDate
+    $create_date,
+    $edit_date
 );
 
 if ($stmt->execute()) {
@@ -67,8 +75,8 @@ if ($stmt->execute()) {
     ]);
 } else {
     echo json_encode([
-        "status"=>"error",
-        "message"=>"บันทึกไม่สำเร็จ"
+        "status" => "error",
+        "message" => "บันทึกไม่สำเร็จ"
     ]);
 }
 

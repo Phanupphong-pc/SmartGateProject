@@ -26,18 +26,18 @@ export default function History() {
 
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
-  const [cardId, setCardId] = useState("");
-  const [employeeId, setEmployeeId] = useState("");
+  const [card_uid, setCard_uid] = useState("");
+  const [employee_id, setEmployee_id] = useState("");
   const [nickname, setNickname] = useState("");
   const [department, setDepartment] = useState("");
   const [phone, setPhone] = useState("");
   const [image, setImage] = useState("");
 
   // แสดงวันที่ทันทีเมื่อเปิดหน้า
-  const [createDate, setCreateDate] = useState(getCurrentDate());
+  const [create_date, setCreateDate] = useState(getCurrentDate());
 
   const saveData = async () => {
-    if (firstname === "" || lastname === "" || employeeId === "") {
+    if (firstname === "" || lastname === "" || employee_id === "") {
       Alert.alert("แจ้งเตือน", "กรุณากรอกข้อมูลให้ครบ");
       return;
     }
@@ -45,7 +45,7 @@ export default function History() {
     const now = getCurrentDate();
 
     try {
-      const response = await fetch("http://10.79.230.211/api/addMember.php", {
+      const response = await fetch("http://10.79.230.211/SmartGate/api/addMember.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,14 +53,14 @@ export default function History() {
         body: JSON.stringify({
           firstname,
           lastname,
-          cardId,
-          employeeId,
+          card_uid,
+          employee_id,
           nickname,
           department,
           phone,
           image,
-          createDate,
-          editDate: now,
+          create_date,
+          edit_date: now,
         }),
       });
 
@@ -71,8 +71,8 @@ export default function History() {
 
         setFirstName("");
         setLastName("");
-        setCardId("");
-        setEmployeeId("");
+        setCard_uid("");
+        setEmployee_id("");
         setNickname("");
         setDepartment("");
         setPhone("");
@@ -116,15 +116,15 @@ export default function History() {
       <TextInput
         style={styles.input}
         placeholder="รหัสพนักงาน"
-        value={employeeId}
-        onChangeText={setEmployeeId}
+        value={employee_id}
+        onChangeText={setEmployee_id}
       />
 
       <TextInput
         style={styles.input}
         placeholder="เลขบัตรประชาชน"
-        value={cardId}
-        onChangeText={setCardId}
+        value={card_uid}
+        onChangeText={setCard_uid}
       />
 
       <TextInput
@@ -151,7 +151,7 @@ export default function History() {
       <TextInput
         style={styles.input}
         placeholder="วันที่สร้าง"
-        value={createDate}
+        value={create_date}
         editable={false}
       />
 
