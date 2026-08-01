@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 // 💡 1. [เพิ่ม] กำหนดค่า BASE_URL
 const BASE_URL = "http://10.79.230.211/SmartGate/api";
@@ -175,13 +175,7 @@ export default function MemberEdit() {
                 value={searchId}
                 onChangeText={setSearchId}
             />
-            <TouchableOpacity
-                style={[styles.actionButton, styles.searchButton]}
-                onPress={searchMember}
-                activeOpacity={0.8}
-            >
-                {styles.actionButtonText}>ค้นหาข้อมูล</Text>
-pacity>
+            <Button title="ค้นหาข้อมูล" onPress={searchMember} />
 
             {/* โซนฟอร์มแก้ไข/ลบข้อมูล */}
             {isFound && (
@@ -360,37 +354,6 @@ const styles = StyleSheet.create({
     statusInactiveText: {
         color: '#fff',
     },
-    actionButton: {
-        ingVertical: 12,
-        erRadius: 8,
-        nItems: 'center',
-        ifyContent: 'center',
-        inTop: 10,
-        พิ่มเงาเบาๆ ให้ปุ่มดูลอยน่ากด
-    owColor: '#000',
-        owOffset: { width: 0, height: 2 },
-        owOpacity: 0.1,
-        owRadius: 4,
-        ation: 2,
-
-        Button: {
-            groundColor: '#10B981', // สีเขียว สำหรับบันทึก
-            inTop: 15,
-
-            teButton: {
-                groundColor: '#EF4444', // สีแดงพาสเทล (Rose Red)
-
-                onButtonText: {
-                    r: '#FFFFFF',
-                    Size: 16,
-                    Weight: 'bold',
-
-                    chButton: {
-                        groundColor: '#2563EB', // สีฟ้า/น้ำเงิน สำหรับค้นหา
-                        inTop: 5,
-                        inBottom: 15,
-
-
 
 
                     });
