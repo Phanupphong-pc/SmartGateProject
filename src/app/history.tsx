@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {
   Alert,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 
 export default function History() {
@@ -39,13 +39,13 @@ export default function History() {
   const [create_date, setCreateDate] = useState(getCurrentDate());
 
   const saveData = async () => {
-    if (firstname === "" || 
-        lastname === "" || 
-        employee_id === ""|| 
-        card_uid === ""||
-        nickname ==="" ||
-        department ===""||
-        phone === "" ) {
+    if (firstname === "" ||
+      lastname === "" ||
+      employee_id === "" ||
+      card_uid === "" ||
+      nickname === "" ||
+      department === "" ||
+      phone === "") {
       Alert.alert("แจ้งเตือน", "กรุณากรอกข้อมูลให้ครบ");
       return;
     }
@@ -67,10 +67,10 @@ export default function History() {
           department,
           phone,
           image,
-          status: "active",
+          status: "Active",
           create_date,
           edit_date: now,
-}),
+        }),
       });
 
       const result = await response.json();
@@ -99,86 +99,86 @@ export default function History() {
 
   return (
     <KeyboardAvoidingView
-    style={{ flex: 1 }}
-    behavior={Platform.OS === "ios" ? "padding" : "height"}
-  >
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={{ paddingBottom: 80 }}
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Text style={styles.title}>เพิ่มข้อมูลพนักงาน</Text>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ paddingBottom: 80 }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={styles.title}>เพิ่มข้อมูลพนักงาน</Text>
 
-      <TextInput
-        style={styles.carduid}
-        placeholder="เลขบัตรประจำตัวพนักงาน"
-        value={card_uid}
-        onChangeText={setCard_uid}
-      />
+        <TextInput
+          style={styles.carduid}
+          placeholder="เลขบัตรประจำตัวพนักงาน"
+          value={card_uid}
+          onChangeText={setCard_uid}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="ชื่อ"
-        value={firstname}
-        onChangeText={setFirstName}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="ชื่อ"
+          value={firstname}
+          onChangeText={setFirstName}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="นามสกุล"
-        value={lastname}
-        onChangeText={setLastName}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="นามสกุล"
+          value={lastname}
+          onChangeText={setLastName}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="ชื่อเล่น"
-        value={nickname}
-        onChangeText={setNickname}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="ชื่อเล่น"
+          value={nickname}
+          onChangeText={setNickname}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="รหัสพนักงาน"
-        value={employee_id}
-        onChangeText={setEmployee_id}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="รหัสพนักงาน"
+          value={employee_id}
+          onChangeText={setEmployee_id}
+        />
 
 
-      <TextInput
-        style={styles.input}
-        placeholder="แผนก"
-        value={department}
-        onChangeText={setDepartment}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="แผนก"
+          value={department}
+          onChangeText={setDepartment}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="เบอร์โทร"
-        value={phone}
-        onChangeText={setPhone}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="เบอร์โทร"
+          value={phone}
+          onChangeText={setPhone}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="URL รูปภาพ"
-        value={image}
-        onChangeText={setImage}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="URL รูปภาพ"
+          value={image}
+          onChangeText={setImage}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="วันที่สร้าง"
-        value={create_date}
-        editable={false}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="วันที่สร้าง"
+          value={create_date}
+          editable={false}
+        />
 
-      <TouchableOpacity style={styles.button} onPress={saveData}>
-        <Text style={styles.buttonText}>บันทึกข้อมูล</Text>
-      </TouchableOpacity>
-    </ScrollView>
-  </KeyboardAvoidingView>
+        <TouchableOpacity style={styles.button} onPress={saveData}>
+          <Text style={styles.buttonText}>บันทึกข้อมูล</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "#007bffff",
     padding: 15,
     borderRadius: 10,
     marginTop: 10,
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   carduid: {
     backgroundColor: "#ffffffff",
     borderWidth: 1,
-    borderColor: "#ff0000ff",
+    borderColor: "#0c0c0cff",
     borderRadius: 10,
     padding: 12,
     marginBottom: 15,

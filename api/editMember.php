@@ -11,6 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 error_reporting(0);
 ini_set('display_errors', 0);
 
+set_exception_handler(function($e) {
+    echo json_encode(["status" => "error", "message" => "ระบบขัดข้องหรือข้อมูลซ้ำ: " . $e->getMessage()]);
+    exit();
+});
+
 $host = "localhost";
 $user = "root";
 $pass = "";

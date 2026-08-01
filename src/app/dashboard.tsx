@@ -1,56 +1,355 @@
+import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import React, { useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, Image, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-function Dashboard() {
-    const [date, setDate] = useState(new Date());
-    const [show, setShow] = useState(false);
+const BASE_URL = "http://10.79.230.211/SmartGate/api";
 
-    const onChange = (event: any, selectedDate?: Date) => {
-        const currentDate = selectedDate || date;
-        setShow(false);
-        setDate(currentDate);
+export default function Dashboard() {
+
+    const [members, setMembers] = useState<any[]>([]);
+    const [checked, setChecked] = useState(0);
+    const [pending, setPending] = useState(0);
+    const [tab, setTab] = useState("All");
+    const [refreshing, setRefreshing] = useState(false);
+    const [showPicker, setShowPicker] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const formatDate = (date: Date) => {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        return `${y}-${m}-${d}`;
     };
 
-    const showDatepicker = () => {
-        setShow(true);
+    const loadData = async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/dashBMember.php?date=${formatDate(selectedDate)}`);
+            const result = await response.json();
+
+            if (result.status == "success") {
+                setMembers(result.members);
+                setChecked(result.checked);
+                setPending(result.pending);
+            }
+        } catch { }
+    };
+
+    useEffect(() => {
+        loadData();
+    }, [selectedDate]);
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await loadData();
+        setRefreshing(false);
+    };
+
+    const filterMember = () => {
+        if (tab == "Checked") {
+            return members.filter((item: any) => item.status == "Checked");
+        }
+
+        if (tab == "Pending") {
+            return members.filter((item: any) => item.status == "Pending");
+        }
+
+        return members;
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Dashboard</Text>
 
-            <Button onPress={showDatepicker} title="เลือกวันที่" />
+            {/* Header */}
 
-            <Text style={styles.dateText}>
-                วันที่เลือก: {date.toLocaleDateString('th-TH')}
-            </Text>
+            <View style={styles.header}>
 
-            {show && (
+                <View>
+                    <Text style={styles.title}>Dashboard</Text>
+                    <Text style={styles.date}>{formatDate(selectedDate)}</Text>
+                </View>
+
+                <View style={styles.calendarBox}>
+
+                    <TouchableOpacity onPress={() => setShowPicker(true)}>
+                        <Ionicons name="calendar" size={28} color="black" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.todayBtn}
+                        onPress={() => setSelectedDate(new Date())}
+                    >
+                        <Text style={styles.todayText}>Today</Text>
+                    </TouchableOpacity>
+
+                </View>
+
+            </View>
+
+            {showPicker && (
                 <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
+                    value={selectedDate}
                     mode="date"
-                    is24Hour={true}
                     display="default"
-                    onChange={onChange}
+                    onChange={(event, date) => {
+                        setShowPicker(false);
+                        if (date) setSelectedDate(date);
+                    }}
                 />
             )}
+
+            {/* Checked / Pending */}
+
+            <View style={styles.infoCard}>
+                <Text style={styles.cardTitle}>สมาชิกที่ลงทะเบียนแล้ว</Text>
+                <View style={styles.cardRow}>
+                <Text style={styles.cardNumber}>{checked} </Text>
+                <Text style={styles.cardTitle2}>คน</Text>
+                </View>
+                
+            </View>
+
+            <View style={[styles.infoCard2, { marginTop: 10 }]}>
+                <Text style={styles.cardTitle}>สมาชิกที่ยังไม่ได้ลงทะเบียน</Text>
+                <View style={styles.cardRow}>
+                <Text style={styles.cardNumber}>{pending} </Text>
+                <Text style={styles.cardTitle2}>คน</Text>
+                </View>
+            </View>
+
+            {/* Tabs */}
+
+            <View style={styles.tabContainer}>
+
+                <TouchableOpacity
+                    style={[styles.tab, tab == "All" && styles.activeTab]}
+                    onPress={() => setTab("All")}
+                >
+                    <Text style={[styles.tabText, tab == "All" && styles.activeText]}>All Member</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.tab, tab == "Checked" && styles.activeTab]}
+                    onPress={() => setTab("Checked")}
+                >
+                    <Text style={[styles.tabText, tab == "Checked" && styles.activeText]}>Checked</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.tab, tab == "Pending" && styles.activeTab]}
+                    onPress={() => setTab("Pending")}
+                >
+                    <Text style={[styles.tabText, tab == "Pending" && styles.activeText]}>Pending</Text>
+                </TouchableOpacity>
+
+            </View>
+
+            {/* Member List */}
+
+            <FlatList
+                data={filterMember()}
+                keyExtractor={(item) => item.employee_id}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+                contentContainerStyle={{ paddingBottom: 20 }}
+                renderItem={({ item }) => (
+
+                    <View style={styles.memberCard}>
+
+                        <Image
+                            source={{
+                                uri: item.image
+                                    ? item.image
+                                    : `https://ui-avatars.com/api/?name=${item.firstname}+${item.lastname}`,
+                            }}
+                            style={styles.avatar}
+                        />
+
+                        <View style={styles.memberInfo}>
+
+                            <Text style={styles.name}>
+                                {item.firstname} {item.lastname}
+                            </Text>
+
+                            <Text style={styles.department}>
+                                {item.department}
+                            </Text>
+
+                            <Text
+                                style={[
+                                    styles.status,
+                                    {
+                                        color:
+                                            item.status == "Checked"
+                                                ? "#16A34A"
+                                                : "#EF4444",
+                                    },
+                                ]}
+                            >
+                                {item.status == "Checked"
+                                    ? item.last_scan
+                                    : "Pending"}
+                            </Text>
+
+                        </View>
+
+                    </View>
+
+                )}
+            />
+
         </View>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
+        flex: 1,
+        backgroundColor: "#F5F6FA",
+        padding: 15,
+    },
+
+    header: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 15,
+    },
+    calendarBox: {
+        alignItems: "center",
     },
     title: {
-        fontSize: 20,
-        marginBottom: 20,
+        fontSize: 28,
+        fontWeight: "bold",
+        color: "#222",
     },
-    dateText: {
-        marginTop: 10,
+
+    date: {
+        marginTop: 5,
+        fontSize: 14,
+        color: "#666",
+    },
+
+    todayBtn: {
+        marginTop: 8,
+        backgroundColor: "#000",
+        paddingVertical: 6,
+        paddingHorizontal: 12,
+        borderRadius: 8,
+        alignItems: "center",
+    },
+
+    todayText: {
+        color: "#fff",
+        fontSize: 13,
+        fontWeight: "bold",
+    },
+
+    infoCard: {
+        backgroundColor: "#007bffff",
+        borderRadius: 12,
+        paddingHorizontal: 15,
+        paddingTop : 15,
+        paddingBottom : 5
+    },
+    infoCard2: {
+        backgroundColor: "#ff0000ff",
+        borderRadius: 12,
+        paddingHorizontal: 15,
+        paddingTop : 15,
+        paddingBottom : 5
+    },
+
+    cardTitle: {
+        color: "#ffffffff",
+        fontSize: 20,
+        fontWeight: "600",
+    },
+
+    cardNumber: {
+        color: "#fff",
+        fontSize: 50,
+        fontWeight: "bold",
+        marginLeft : 5
+    },
+    cardTitle2: {
+        color: "#ffffffff",
+        fontSize: 30,
+        fontWeight: "600",
+        marginTop : 10,
+    },
+    cardRow: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    tabContainer: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center",
+        marginVertical: 18,
+    },
+
+    tab: {
+        paddingVertical: 8,
+        paddingHorizontal: 15,
+    },
+
+    activeTab: {
+        backgroundColor: "#000",
+        borderRadius: 8,
+    },
+
+    tabText: {
+        fontSize: 14,
+        fontWeight: "600",
+        color: "#000",
+    },
+
+    activeText: {
+        color: "#fff",
+    },
+
+    memberCard: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#fff",
+        paddingVertical: 10,
+        paddingHorizontal: 14,
+        borderRadius: 12,
+        marginBottom: 10,
+        elevation: 2,
+    },
+
+    avatar: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: "#DDD",
+        marginRight: 12,
+    },
+
+    memberInfo: {
+        flex: 1,
+    },
+
+    name: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#222",
+    },
+
+    department: {
+        fontSize: 13,
+        color: "#777",
+        marginTop: 2,
+    },
+
+    status: {
+        marginTop: 4,
+        fontSize: 12,
+        fontWeight: "bold",
     },
 });
-
-export default Dashboard;
