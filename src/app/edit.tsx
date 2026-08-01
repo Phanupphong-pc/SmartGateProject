@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 // 💡 1. [เพิ่ม] กำหนดค่า BASE_URL
 const BASE_URL = "http://10.79.230.211/SmartGate/api";
@@ -35,7 +35,7 @@ export default function MemberEdit() {
         const minute = String(now.getMinutes()).padStart(2, "0");
         const second = String(now.getSeconds()).padStart(2, "0");
 
-        return ${ year } -${ month } -${ day } ${ hour }:${ minute }:${ second };
+        return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
     };
 
     // 1. ค้นหาพนักงาน
@@ -47,7 +47,7 @@ export default function MemberEdit() {
 
         try {
             const response = await fetch(
-                ${ BASE_URL } / findMember.php ? employee_id = + encodeURIComponent(searchId)
+                `${BASE_URL}/findMember.php?employee_id=` + encodeURIComponent(searchId)
             );
             const json = await response.json();
 
@@ -92,7 +92,7 @@ export default function MemberEdit() {
         setEditDate(currentNow);
 
         try {
-            const response = await fetch(${ BASE_URL } / editMember.php, {
+            const response = await fetch(`${BASE_URL}/editMember.php`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -129,14 +129,14 @@ export default function MemberEdit() {
 
     // 3. ลบข้อมูล
     const deleteMember = async (): Promise<void> => {
-        Alert.alert("ยืนยันการลบ", คุณต้องการลบพนักงานรหัส ${ old_employee_id } ใช่หรือไม่ ?, [
+        Alert.alert("ยืนยันการลบ", `คุณต้องการลบพนักงานรหัส ${old_employee_id} ใช่หรือไม่?`, [
             { text: "ยกเลิก", style: "cancel" },
             {
                 text: "ลบข้อมูล",
                 style: "destructive",
                 onPress: async () => {
                     try {
-                        const response = await fetch(${ BASE_URL } / deleteMember.php, {
+                        const response = await fetch(`${BASE_URL}/deleteMember.php`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
@@ -175,7 +175,13 @@ export default function MemberEdit() {
                 value={searchId}
                 onChangeText={setSearchId}
             />
-            <Button title="ค้นหาข้อมูล" onPress={searchMember} />
+            <TouchableOpacity 
+                style={[styles.actionButton, styles.searchButton]} 
+                onPress={searchMember}
+                activeOpacity={0.8}
+            >
+                <Text style={styles.actionButtonText}>ค้นหาข้อมูล</Text>
+            </TouchableOpacity>
 
             {/* โซนฟอร์มแก้ไข/ลบข้อมูล */}
             {isFound && (
@@ -355,5 +361,33 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
 
-
-                    });
+    actionButton: {
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    saveButton: {
+        backgroundColor: '#10B981',
+        marginTop: 15,
+    },
+    deleteButton: {
+        backgroundColor: '#EF4444',
+    },
+    actionButtonText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    searchButton: {
+        backgroundColor: '#007bffff',
+        marginTop: 5,
+        marginBottom: 15,
+    },
+});
