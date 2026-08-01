@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 // 💡 1. [เพิ่ม] กำหนดค่า BASE_URL
 const BASE_URL = "http://10.79.230.211/SmartGate/api";
@@ -175,8 +175,8 @@ export default function MemberEdit() {
                 value={searchId}
                 onChangeText={setSearchId}
             />
-            <TouchableOpacity 
-                style={[styles.actionButton, styles.searchButton]} 
+            <TouchableOpacity
+                style={[styles.actionButton, styles.searchButton]}
                 onPress={searchMember}
                 activeOpacity={0.8}
             >
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
         paddingTop: 50,
     },
     title: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
