@@ -176,7 +176,7 @@ export default function Dashboard() {
                             </Text>
 
                             <Text style={styles.department}>
-                                {item.department}
+                                Department: {item.department}
                             </Text>
 
                             <Text
