@@ -24,6 +24,7 @@ $phone = $data["phone"] ?? "";
 $image = $data["image"] ?? "";
 $create_date = $data["create_date"] ?? date("Y-m-d H:i:s");
 $edit_date = $data["edit_date"] ?? date("Y-m-d H:i:s");
+$status = $data["status"] ?? "active";
 
 // ตรวจสอบข้อมูลที่จำเป็น
 if ($firstname == "" || $lastname == "" || $employee_id == "") {
@@ -34,23 +35,20 @@ if ($firstname == "" || $lastname == "" || $employee_id == "") {
     exit();
 }
 
-$sql = "INSERT INTO memberlist
-(
-    firstname,
-    lastname,
-    card_uid,
-    employee_id,
-    nickname,
-    department,
-    phone,
-    image,
-    create_date,
-    edit_date
-)
-VALUES
-(
-    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-)";
+$stmt->bind_param(
+    "sssssssssss",
+    $firstname,
+    $lastname,
+    $card_uid,
+    $employee_id,
+    $nickname,
+    $department,
+    $phone,
+    $image,
+    $status,
+    $create_date,
+    $edit_date
+);
 
 $stmt = $conn->prepare($sql);
 
