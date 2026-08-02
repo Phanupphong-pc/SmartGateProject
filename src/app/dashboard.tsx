@@ -108,7 +108,7 @@ export default function Dashboard() {
                     onChange={(event, date) => {
                         setShowPicker(false);
                         if (date) setSelectedDate(date);
-                    }}/>
+                    }} />
             )}
             <View style={styles.infoCard}>
                 <Text style={styles.cardTitle}>สมาชิกที่ลงทะเบียนแล้ว</Text>
@@ -187,7 +187,8 @@ export default function Dashboard() {
                                         setShowHistory(false);
                                     } else {
                                         setOpenMember(item.employee_id);
-                                    }}}>
+                                    }
+                                }}>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <Image
                                         source={{
@@ -195,7 +196,7 @@ export default function Dashboard() {
                                                 `https://ui-avatars.com/api/?name=${item.firstname}+${item.lastname}`
                                                 : item.image
                                         }}
-                                        style={styles.avatar}/>
+                                        style={styles.avatar} />
                                     <View style={styles.memberInfo}>
                                         <Text style={styles.name}>
                                             {item.firstname} {item.lastname}
@@ -217,7 +218,8 @@ export default function Dashboard() {
                                             style={styles.historyBtn}
                                             onPress={() => {
                                                 loadHistory(item.employee_id);
-                                                setShowHistory(!showHistory);}}>
+                                                setShowHistory(!showHistory);
+                                            }}>
                                             <Text style={styles.historyText}>ประวัติการเช็คชื่อ</Text>
                                         </TouchableOpacity>
                                         {showHistory &&
@@ -229,7 +231,7 @@ export default function Dashboard() {
                                         }
                                     </View>
                                 )}</TouchableOpacity>
-                        </View>)}/>
+                        </View>)} />
             ) : (
                 <FlatList
                     data={filterMember()}
@@ -408,7 +410,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderRadius: 10,
         paddingHorizontal: 10,
-        marginTop:15,
+        marginTop: 15,
         marginBottom: 15,
         elevation: 2,
     },
