@@ -113,6 +113,7 @@ export default function History() {
         <TextInput
           style={styles.carduid}
           placeholder="เลขบัตรประจำตัวพนักงาน"
+          placeholderTextColor="#FFFFFF"
           value={card_uid}
           onChangeText={setCard_uid}
         />
@@ -120,6 +121,7 @@ export default function History() {
         <TextInput
           style={styles.input}
           placeholder="ชื่อ"
+          placeholderTextColor="#FFFFFF"
           value={firstname}
           onChangeText={setFirstName}
         />
@@ -127,6 +129,7 @@ export default function History() {
         <TextInput
           style={styles.input}
           placeholder="นามสกุล"
+          placeholderTextColor="#FFFFFF"
           value={lastname}
           onChangeText={setLastName}
         />
@@ -134,6 +137,7 @@ export default function History() {
         <TextInput
           style={styles.input}
           placeholder="ชื่อเล่น"
+          placeholderTextColor="#FFFFFF"
           value={nickname}
           onChangeText={setNickname}
         />
@@ -141,6 +145,7 @@ export default function History() {
         <TextInput
           style={styles.input}
           placeholder="รหัสพนักงาน"
+          placeholderTextColor="#FFFFFF"
           value={employee_id}
           onChangeText={setEmployee_id}
         />
@@ -149,6 +154,7 @@ export default function History() {
         <TextInput
           style={styles.input}
           placeholder="แผนก"
+          placeholderTextColor="#FFFFFF"
           value={department}
           onChangeText={setDepartment}
         />
@@ -156,6 +162,7 @@ export default function History() {
         <TextInput
           style={styles.input}
           placeholder="เบอร์โทร"
+          placeholderTextColor="#FFFFFF"
           value={phone}
           onChangeText={setPhone}
         />
@@ -163,6 +170,7 @@ export default function History() {
         <TextInput
           style={styles.input}
           placeholder="URL รูปภาพ"
+          placeholderTextColor="#FFFFFF"
           value={image}
           onChangeText={setImage}
         />
@@ -170,6 +178,7 @@ export default function History() {
         <TextInput
           style={styles.input}
           placeholder="วันที่สร้าง"
+          placeholderTextColor="#FFFFFF"
           value={create_date}
           editable={false}
         />
@@ -186,7 +195,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#0F172A",
   },
 
   title: {
@@ -194,20 +203,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 20,
+    color: "#F8FAFC",
   },
 
   input: {
-    backgroundColor: "#fff",
+    backgroundColor: "#1E293B",
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "#334155",
     borderRadius: 10,
     padding: 12,
     marginBottom: 15,
     fontSize: 16,
+    color: "#F8FAFC",
   },
 
   button: {
-    backgroundColor: "#007bffff",
+    backgroundColor: "#38BDF8",
     padding: 15,
     borderRadius: 10,
     marginTop: 5,
@@ -215,19 +226,20 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: "#fff",
+    color: "#0F172A",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 18,
   },
   carduid: {
-    backgroundColor: "#ffffffff",
+    backgroundColor: "#1E293B",
     borderWidth: 1,
-    borderColor: "#0c0c0cff",
+    borderColor: "#38BDF8",
     borderRadius: 10,
     padding: 12,
     marginBottom: 15,
     fontSize: 16,
+    color: "#F8FAFC",
   }
 
 });

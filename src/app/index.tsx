@@ -54,7 +54,7 @@ export default function App() {
 const styles = StyleSheet.create({
     safeview: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#0F172A',
     },
     container: {
         flexGrow: 1,
@@ -74,19 +74,19 @@ const styles = StyleSheet.create({
     welcomeTitle: {
         fontSize: 36,
         fontWeight: '800',
-        color: '#0F172A',
+        color: '#F8FAFC',
         letterSpacing: -0.5,
         marginBottom: 6,
     },
     welcomeSubtitle: {
         fontSize: 18,
         fontWeight: '600',
-        color: '#475569',
+        color: '#94A3B8',
     },
     divider: {
         width: 48,
         height: 4,
-        backgroundColor: '#2563EB',
+        backgroundColor: '#38BDF8',
         borderRadius: 2,
         marginVertical: 20,
     },
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     descriptionText: {
         fontSize: 15,
         lineHeight: 26,
-        color: '#64748B',
+        color: '#CBD5E1',
         textAlign: 'center',
     },
     menuContainer: {
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     sectionHeader: {
         fontSize: 13,
         fontWeight: '700',
-        color: '#94A3B8',
+        color: '#64748B',
         textTransform: 'uppercase',
         letterSpacing: 1,
         marginBottom: 4,
@@ -118,19 +118,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F8FAFC',
+        backgroundColor: '#1E293B',
         width: '100%',
         paddingVertical: 20, // เพิ่มขนาดปุ่มให้หนาขึ้น ใช้อ่างว่างได้คุ้มค่า
         paddingHorizontal: 20,
         borderRadius: 16,
         borderWidth: 1,
-        borderColor: '#E2E8F0',
+        borderColor: '#334155',
         overflow: 'hidden',
     },
     linkText: {
         fontSize: 17,
         fontWeight: '600',
-        color: '#1E293B',
+        color: '#F8FAFC',
         textAlign: 'center',
     },
     

@@ -93,7 +93,7 @@ export default function Dashboard() {
                 </View>
                 <View style={styles.calendarBox}>
                     <TouchableOpacity onPress={() => setShowPicker(true)}>
-                        <Ionicons name="calendar" size={28} color="black" />
+                        <Ionicons name="calendar" size={28} color="#94A3B8" />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.todayBtn}
                         onPress={() => setSelectedDate(new Date())}>
@@ -115,14 +115,14 @@ export default function Dashboard() {
                 <Text style={styles.cardTitle}>สมาชิกที่ลงทะเบียนแล้ว</Text>
                 <View style={styles.cardRow}>
                     <Text style={styles.cardNumber}>{checked}</Text>
-                    <Text style={styles.cardTitle2}>คน</Text>
+                    <Text style={styles.cardTitle2}>  คน</Text>
                 </View>
             </View>
             <View style={[styles.infoCard2, { marginTop: 10 }]}>
                 <Text style={styles.cardTitle}>สมาชิกที่ยังไม่ได้ลงทะเบียน</Text>
                 <View style={styles.cardRow}>
                     <Text style={styles.cardNumber}>{pending}</Text>
-                    <Text style={styles.cardTitle2}>คน</Text>
+                    <Text style={styles.cardTitle2}>  คน</Text>
                 </View>
             </View>
             {!searchMode ? (
@@ -151,14 +151,15 @@ export default function Dashboard() {
                     <TouchableOpacity
                         style={styles.searchBtn}
                         onPress={() => setSearchMode(true)}>
-                        <Ionicons name="search" size={22} color="black" />
+                        <Ionicons name="search" size={22} color="#94A3B8" />
                     </TouchableOpacity>
                 </View>
             ) : (
                 <View style={styles.searchBar}>
                     <TextInput
-                        style={styles.searchInput}
+                        style={[styles.searchInput, { color: "#F8FAFC" }]}
                         placeholder="ค้นหา รหัส ชื่อ นามสกุล ชื่อเล่น แผนก"
+                        placeholderTextColor="#94A3B8"
                         value={keyword}
                         onChangeText={searchMember}
                     />
@@ -209,12 +210,12 @@ export default function Dashboard() {
                                 </View>
                                 {openMember == item.employee_id && (
                                     <View style={styles.detailBox}>
-                                        <Text>รหัสบัตรพนักงาน : {item.card_uid}</Text>
-                                        <Text>รหัสพนักงาน : {item.employee_id}</Text>
-                                        <Text>ชื่อเล่น : {item.nickname}</Text>
-                                        <Text>ตำแหน่ง : {item.department}</Text>
-                                        <Text>เบอร์โทร : {item.phone}</Text>
-                                        <Text>สถานะ : {item.status}</Text>
+                                        <Text style={{color: '#CBD5E1'}}>รหัสบัตรพนักงาน : {item.card_uid}</Text>
+                                        <Text style={{color: '#CBD5E1'}}>รหัสพนักงาน : {item.employee_id}</Text>
+                                        <Text style={{color: '#CBD5E1'}}>ชื่อเล่น : {item.nickname}</Text>
+                                        <Text style={{color: '#CBD5E1'}}>ตำแหน่ง : {item.department}</Text>
+                                        <Text style={{color: '#CBD5E1'}}>เบอร์โทร : {item.phone}</Text>
+                                        <Text style={{color: '#CBD5E1'}}>สถานะ : {item.status}</Text>
                                         <TouchableOpacity
                                             style={styles.historyBtn}
                                             onPress={() => {
@@ -274,7 +275,7 @@ export default function Dashboard() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F5F6FA",
+        backgroundColor: "#0F172A",
         padding: 15,
     },
     header: {
@@ -289,29 +290,29 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 28,
         fontWeight: "bold",
-        color: "#222",
+        color: "#F8FAFC",
     },
     date: {
         marginTop: 5,
         fontSize: 14,
-        color: "#666",
+        color: "#94A3B8",
     },
     todayBtn: {
         marginTop: 8,
-        backgroundColor: "#000",
+        backgroundColor: "#38BDF8",
         paddingVertical: 6,
         paddingHorizontal: 12,
         borderRadius: 8,
         alignItems: "center",
     },
     todayText: {
-        color: "#fff",
+        color: "#0F172A",
         fontSize: 13,
         fontWeight: "bold",
     },
     infoCard: {
-        backgroundColor: "#ffffffff",
-        borderColor: "#007bffff",
+        backgroundColor: "#1E293B",
+        borderColor: "#38BDF8",
         borderWidth: 1.5,
         borderRadius: 12,
         paddingHorizontal: 15,
@@ -319,8 +320,8 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     infoCard2: {
-        backgroundColor: "#ffffffff",
-        borderColor: "#ff0000ff",
+        backgroundColor: "#1E293B",
+        borderColor: "#EF4444",
         borderWidth: 1.5,
         borderRadius: 12,
         paddingHorizontal: 15,
@@ -328,18 +329,18 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     cardTitle: {
-        color: "#000000ff",
+        color: "#F8FAFC",
         fontSize: 20,
         fontWeight: "600",
     },
     cardNumber: {
-        color: "#000000ff",
+        color: "#F8FAFC",
         fontSize: 50,
         fontWeight: "bold",
         marginLeft: 5
     },
     cardTitle2: {
-        color: "#000000ff",
+        color: "#94A3B8",
         fontSize: 30,
         fontWeight: "600",
         marginTop: 10,
@@ -359,21 +360,21 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
     },
     activeTab: {
-        backgroundColor: "#000",
+        backgroundColor: "#38BDF8",
         borderRadius: 8,
     },
     tabText: {
         fontSize: 14,
         fontWeight: "600",
-        color: "#000",
+        color: "#94A3B8",
     },
     activeText: {
-        color: "#fff",
+        color: "#0F172A",
     },
     memberCard: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#fff",
+        backgroundColor: "#1E293B",
         paddingVertical: 10,
         paddingHorizontal: 14,
         borderRadius: 12,
@@ -384,7 +385,7 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 25,
-        backgroundColor: "#DDD",
+        backgroundColor: "#334155",
         marginRight: 12,
     },
     memberInfo: {
@@ -393,11 +394,11 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 16,
         fontWeight: "bold",
-        color: "#222",
+        color: "#F8FAFC",
     },
     department: {
         fontSize: 13,
-        color: "#777",
+        color: "#94A3B8",
         marginTop: 2,
     },
     status: {
@@ -412,7 +413,7 @@ const styles = StyleSheet.create({
     searchBar: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#fff",
+        backgroundColor: "#1E293B",
         borderRadius: 10,
         paddingHorizontal: 10,
         marginTop: 15,
@@ -427,23 +428,23 @@ const styles = StyleSheet.create({
         marginTop: 10,
         paddingTop: 10,
         borderTopWidth: 1,
-        borderColor: "#ddd",
+        borderColor: "#334155",
     },
     historyBtn: {
-        backgroundColor: "#000",
+        backgroundColor: "#38BDF8",
         paddingVertical: 8,
         borderRadius: 8,
         marginTop: 10,
         marginBottom: 5,
     },
     historyText: {
-        color: "#fff",
+        color: "#0F172A",
         textAlign: "center",
         fontWeight: "bold",
     },
     historyItem: {
         fontSize: 13,
-        color: "#555",
+        color: "#CBD5E1",
         marginTop: 4,
     },
 });

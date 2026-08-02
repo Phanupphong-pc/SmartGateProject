@@ -169,17 +169,18 @@ export default function MemberEdit() {
 
             {/* โซนค้นหา */}
             <TextInput
-                style={styles.input}
+                style={[styles.input, { color: "#F8FAFC" }]}
                 placeholder="กรอกรหัสพนักงานที่ต้องการค้นหา"
+                placeholderTextColor="#FFFFFF"
                 value={searchId}
                 onChangeText={setSearchId}
             />
             <TouchableOpacity
-                style={[styles.actionButton, styles.searchButton]}
+                style={styles.searchButton}
                 onPress={searchMember}
                 activeOpacity={0.8}
             >
-                <Text style={styles.actionButtonText}>ค้นหาข้อมูล</Text>
+                <Text style={styles.searchButtonText}>ค้นหาข้อมูล</Text>
             </TouchableOpacity>
 
             {/* โซนฟอร์มแก้ไข/ลบข้อมูล */}
@@ -256,6 +257,7 @@ export default function MemberEdit() {
                         value={edit_date}
                         editable={false}
                         placeholder="ระบบจะบันทึกให้อัตโนมัติ"
+                        placeholderTextColor="#FFFFFF"
                     />
 
                     {/* ปุ่มบันทึกการแก้ไข */}
@@ -285,45 +287,49 @@ const styles = StyleSheet.create({
     container: {
         padding: 20,
         paddingTop: 50,
+        backgroundColor: "#0F172A",
+        flexGrow: 1,
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
+        color: "#F8FAFC",
     },
     subTitle: {
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 15,
         textAlign: 'center',
-        color: '#333',
+        color: '#F8FAFC',
     },
     label: {
         fontSize: 14,
         marginBottom: 4,
-        color: '#555',
+        color: '#94A3B8',
         fontWeight: '500',
     },
     input: {
-        backgroundColor: "#fff",
+        backgroundColor: "#1E293B",
         borderWidth: 1,
-        borderColor: "#ddd",
+        borderColor: "#334155",
         borderRadius: 10,
         padding: 12,
         marginBottom: 15,
         fontSize: 16,
+        color: "#F8FAFC",
     },
     disabledInput: {
-        backgroundColor: '#e9ecef',
-        color: '#6c757d',
+        backgroundColor: '#334155',
+        color: '#94A3B8',
     },
     editForm: {
         marginTop: 20,
         padding: 15,
         borderWidth: 1,
-        borderColor: '#ddd',
-        backgroundColor: '#f9f9f9',
+        borderColor: '#334155',
+        backgroundColor: '#1E293B',
         borderRadius: 5,
     },
     statusContainer: {
@@ -335,35 +341,35 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: 10,
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#334155',
         borderRadius: 5,
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#1E293B',
         marginHorizontal: 4,
     },
     statusActiveBtn: {
-        backgroundColor: '#28a745', // สีเขียวเมื่อเลือก Active
-        borderColor: '#28a745',
+        backgroundColor: '#10B981', // สีเขียวเมื่อเลือก Active
+        borderColor: '#10B981',
     },
     statusInactiveBtn: {
-        backgroundColor: '#dc3545', // สีแดงเมื่อเลือก Inactive
-        borderColor: '#dc3545',
+        backgroundColor: '#EF4444', // สีแดงเมื่อเลือก Inactive
+        borderColor: '#EF4444',
     },
     statusText: {
         fontSize: 14,
         fontWeight: 'bold',
-        color: '#555',
+        color: '#94A3B8',
     },
     statusActiveText: {
-        color: '#fff',
+        color: '#F8FAFC',
     },
     statusInactiveText: {
-        color: '#fff',
+        color: '#F8FAFC',
     },
 
     actionButton: {
-        paddingVertical: 12,
-        borderRadius: 8,
+        paddingVertical: 15,
+        borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
@@ -381,13 +387,27 @@ const styles = StyleSheet.create({
         backgroundColor: '#EF4444',
     },
     actionButtonText: {
-        color: '#FFFFFF',
-        fontSize: 16,
+        color: '#F8FAFC',
+        fontSize: 18,
         fontWeight: 'bold',
     },
     searchButton: {
-        backgroundColor: '#007bffff',
-        marginTop: 5,
+        backgroundColor: '#38BDF8',
+        paddingVertical: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
         marginBottom: 15,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    searchButtonText: {
+        color: '#0F172A',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 });
