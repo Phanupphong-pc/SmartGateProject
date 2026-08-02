@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#F5F6FA"
   },
 
   title: {
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
 
   button: {
     backgroundColor: "#007bffff",
-    padding: 15,
+    padding: 12,
     borderRadius: 10,
     marginTop: 10,
     marginBottom: 20,
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 16,
   },
   carduid: {
     backgroundColor: "#ffffffff",

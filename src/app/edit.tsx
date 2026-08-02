@@ -171,7 +171,6 @@ export default function MemberEdit() {
             <TextInput
                 style={styles.input}
                 placeholder="กรอกรหัสพนักงานที่ต้องการค้นหา"
-                placeholderTextColor="#94A3B8" // ช่วยให้ข้อความ Placeholder ดูนุ่มตาอ่านง่าย
                 value={searchId}
                 onChangeText={setSearchId}
             />
@@ -286,6 +285,7 @@ const styles = StyleSheet.create({
     container: {
         padding: 20,
         paddingTop: 50,
+        backgroundColor: "#F5F6FA"
     },
     title: {
         fontSize: 24,

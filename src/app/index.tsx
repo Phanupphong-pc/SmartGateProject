@@ -54,7 +54,7 @@ export default function App() {
 const styles = StyleSheet.create({
     safeview: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F5F6FA',
     },
     container: {
         flexGrow: 1,

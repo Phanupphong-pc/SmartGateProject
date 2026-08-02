@@ -88,7 +88,7 @@ export default function Dashboard() {
         <View style={styles.container}>
             <View style={styles.header}>
                 <View>
-                    <Text style={styles.title}>Dashboard</Text>
+                    <Text style={styles.title}>ข้อมูลการลงทะเบียน</Text>
                     <Text style={styles.date}>{formatDate(selectedDate)}</Text>
                 </View>
                 <View style={styles.calendarBox}>
@@ -97,7 +97,8 @@ export default function Dashboard() {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.todayBtn}
                         onPress={() => setSelectedDate(new Date())}>
-                        <Text style={styles.todayText}>Today</Text> </TouchableOpacity>
+                        <Text style={styles.todayText}>Today</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
             {showPicker && (
@@ -108,7 +109,7 @@ export default function Dashboard() {
                     onChange={(event, date) => {
                         setShowPicker(false);
                         if (date) setSelectedDate(date);
-                    }}/>
+                    }} />
             )}
             <View style={styles.infoCard}>
                 <Text style={styles.cardTitle}>สมาชิกที่ลงทะเบียนแล้ว</Text>
@@ -187,7 +188,8 @@ export default function Dashboard() {
                                         setShowHistory(false);
                                     } else {
                                         setOpenMember(item.employee_id);
-                                    }}}>
+                                    }
+                                }}>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <Image
                                         source={{
@@ -195,7 +197,7 @@ export default function Dashboard() {
                                                 `https://ui-avatars.com/api/?name=${item.firstname}+${item.lastname}`
                                                 : item.image
                                         }}
-                                        style={styles.avatar}/>
+                                        style={styles.avatar} />
                                     <View style={styles.memberInfo}>
                                         <Text style={styles.name}>
                                             {item.firstname} {item.lastname}
@@ -217,7 +219,8 @@ export default function Dashboard() {
                                             style={styles.historyBtn}
                                             onPress={() => {
                                                 loadHistory(item.employee_id);
-                                                setShowHistory(!showHistory);}}>
+                                                setShowHistory(!showHistory);
+                                            }}>
                                             <Text style={styles.historyText}>ประวัติการเช็คชื่อ</Text>
                                         </TouchableOpacity>
                                         {showHistory &&
@@ -229,7 +232,7 @@ export default function Dashboard() {
                                         }
                                     </View>
                                 )}</TouchableOpacity>
-                        </View>)}/>
+                        </View>)} />
             ) : (
                 <FlatList
                     data={filterMember()}
@@ -307,35 +310,43 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     infoCard: {
-        backgroundColor: "#007bffff",
+        backgroundColor: "#ffffffff",
         borderRadius: 12,
+        borderColor: "#007bffff",
+        borderWidth: 1.5,
         paddingHorizontal: 15,
         paddingTop: 15,
-        paddingBottom: 5
+        paddingBottom: 5,
+        elevation: 4,
+
     },
     infoCard2: {
-        backgroundColor: "#ff0000ff",
+        backgroundColor: "#ffffffff",
         borderRadius: 12,
+        borderColor: "#ff0000ff",
+        borderWidth: 1.5,
         paddingHorizontal: 15,
         paddingTop: 15,
-        paddingBottom: 5
+        paddingBottom: 5,
+        elevation: 4,
     },
     cardTitle: {
-        color: "#ffffffff",
+        color: "#000000ff",
         fontSize: 20,
         fontWeight: "600",
     },
     cardNumber: {
-        color: "#fff",
+        color: "#000000ff",
         fontSize: 50,
         fontWeight: "bold",
         marginLeft: 5
     },
     cardTitle2: {
-        color: "#ffffffff",
+        color: "#000000ff",
         fontSize: 30,
         fontWeight: "600",
         marginTop: 10,
+        marginLeft: 20
     },
     cardRow: {
         flexDirection: "row",
@@ -408,7 +419,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderRadius: 10,
         paddingHorizontal: 10,
-        marginTop:15,
+        marginTop: 15,
         marginBottom: 15,
         elevation: 2,
     },
