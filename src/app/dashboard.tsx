@@ -88,7 +88,7 @@ export default function Dashboard() {
         <View style={styles.container}>
             <View style={styles.header}>
                 <View>
-                    <Text style={styles.title}>Dashboard</Text>
+                    <Text style={styles.title}>ข้อมูลการลงทะเบียน</Text>
                     <Text style={styles.date}>{formatDate(selectedDate)}</Text>
                 </View>
                 <View style={styles.calendarBox}>
@@ -97,7 +97,8 @@ export default function Dashboard() {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.todayBtn}
                         onPress={() => setSelectedDate(new Date())}>
-                        <Text style={styles.todayText}>Today</Text> </TouchableOpacity>
+                        <Text style={styles.todayText}>Today</Text>
+                        </TouchableOpacity>
                 </View>
             </View>
             {showPicker && (
@@ -309,32 +310,36 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     infoCard: {
-        backgroundColor: "#007bffff",
+        backgroundColor: "#ffffffff",
+        borderColor: "#007bffff",
+        borderWidth: 1.5,
         borderRadius: 12,
         paddingHorizontal: 15,
         paddingTop: 15,
-        paddingBottom: 5
+        paddingBottom: 5,
     },
     infoCard2: {
-        backgroundColor: "#ff0000ff",
+        backgroundColor: "#ffffffff",
+        borderColor: "#ff0000ff",
+        borderWidth: 1.5,
         borderRadius: 12,
         paddingHorizontal: 15,
         paddingTop: 15,
         paddingBottom: 5
     },
     cardTitle: {
-        color: "#ffffffff",
+        color: "#000000ff",
         fontSize: 20,
         fontWeight: "600",
     },
     cardNumber: {
-        color: "#fff",
+        color: "#000000ff",
         fontSize: 50,
         fontWeight: "bold",
         marginLeft: 5
     },
     cardTitle2: {
-        color: "#ffffffff",
+        color: "#000000ff",
         fontSize: 30,
         fontWeight: "600",
         marginTop: 10,
