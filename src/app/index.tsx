@@ -32,17 +32,17 @@ export default function App() {
 
                     <Link href="/dashboard" style={styles.link}>
                         <Text style={styles.linkText}>Dashboard</Text>
-                        
+
                     </Link>
 
                     <Link href="/history" style={styles.link}>
                         <Text style={styles.linkText}>Add Member</Text>
-                        
+
                     </Link>
 
                     <Link href="/edit" style={styles.link}>
                         <Text style={styles.linkText}>Edit Data</Text>
-            
+
                     </Link>
                 </View>
 
@@ -54,7 +54,7 @@ export default function App() {
 const styles = StyleSheet.create({
     safeview: {
         flex: 1,
-        backgroundColor: '#F5F6FA',
+        backgroundColor: '#0B1120',
     },
     container: {
         flexGrow: 1,
@@ -74,19 +74,19 @@ const styles = StyleSheet.create({
     welcomeTitle: {
         fontSize: 36,
         fontWeight: '800',
-        color: '#0F172A',
+        color: '#F1F5F9',
         letterSpacing: -0.5,
         marginBottom: 6,
     },
     welcomeSubtitle: {
         fontSize: 18,
         fontWeight: '600',
-        color: '#475569',
+        color: '#94A3B8',
     },
     divider: {
         width: 48,
         height: 4,
-        backgroundColor: '#2563EB',
+        backgroundColor: '#22D3EE',
         borderRadius: 2,
         marginVertical: 20,
     },
@@ -97,18 +97,18 @@ const styles = StyleSheet.create({
     descriptionText: {
         fontSize: 15,
         lineHeight: 26,
-        color: '#64748B',
+        color: '#94A3B8',
         textAlign: 'center',
     },
     menuContainer: {
         width: '100%',
         gap: 14,
-        paddingBottom: 20, // เว้นระยะจากขอบล่างให้พอดี
+        paddingBottom: 20,
     },
     sectionHeader: {
         fontSize: 13,
         fontWeight: '700',
-        color: '#94A3B8',
+        color: '#475569',
         textTransform: 'uppercase',
         letterSpacing: 1,
         marginBottom: 4,
@@ -118,20 +118,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F8FAFC',
+        backgroundColor: '#1A2332',
         width: '100%',
-        paddingVertical: 20, // เพิ่มขนาดปุ่มให้หนาขึ้น ใช้อ่างว่างได้คุ้มค่า
+        paddingVertical: 20,
         paddingHorizontal: 20,
         borderRadius: 16,
         borderWidth: 1,
-        borderColor: '#E2E8F0',
+        borderColor: '#1E293B',
         overflow: 'hidden',
     },
     linkText: {
         fontSize: 17,
         fontWeight: '600',
-        color: '#1E293B',
+        color: '#E2E8F0',
         textAlign: 'center',
     },
-    
+
 });

@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#F5F6FA"
+    backgroundColor: "#0B1120"
   },
 
   title: {
@@ -194,40 +194,48 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 20,
+    color: "#F1F5F9",
   },
 
   input: {
-    backgroundColor: "#fff",
+    backgroundColor: "#1A2332",
     borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
+    borderColor: "#1E293B",
+    borderRadius: 12,
     padding: 12,
     marginBottom: 15,
     fontSize: 16,
+    color: "#ffffffff",
   },
 
   button: {
-    backgroundColor: "#007bffff",
-    padding: 12,
-    borderRadius: 10,
+    backgroundColor: "#0E7490",
+    padding: 14,
+    borderRadius: 12,
     marginTop: 10,
     marginBottom: 20,
+    shadowColor: "#06B6D4",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 4,
   },
 
   buttonText: {
-    color: "#fff",
+    color: "#E0F2FE",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
   },
   carduid: {
-    backgroundColor: "#ffffffff",
-    borderWidth: 1,
-    borderColor: "#0c0c0cff",
-    borderRadius: 10,
+    backgroundColor: "#1A2332",
+    borderWidth: 1.5,
+    borderColor: "#0891B2",
+    borderRadius: 12,
     padding: 12,
     marginBottom: 15,
     fontSize: 16,
+    color: "#22D3EE",
   }
 
 });

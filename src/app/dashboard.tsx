@@ -93,7 +93,7 @@ export default function Dashboard() {
                 </View>
                 <View style={styles.calendarBox}>
                     <TouchableOpacity onPress={() => setShowPicker(true)}>
-                        <Ionicons name="calendar" size={28} color="black" />
+                        <Ionicons name="calendar" size={28} color="#22D3EE" />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.todayBtn}
                         onPress={() => setSelectedDate(new Date())}>
@@ -151,7 +151,7 @@ export default function Dashboard() {
                     <TouchableOpacity
                         style={styles.searchBtn}
                         onPress={() => setSearchMode(true)}>
-                        <Ionicons name="search" size={22} color="black" />
+                        <Ionicons name="search" size={22} color="#94A3B8" />
                     </TouchableOpacity>
                 </View>
             ) : (
@@ -170,7 +170,7 @@ export default function Dashboard() {
                             setOpenMember("");
                             setHistory([]);
                         }}>
-                        <Ionicons name="close" size={28} color="red" />
+                        <Ionicons name="close" size={28} color="#F43F5E" />
                     </TouchableOpacity>
                 </View>
             )}
@@ -209,12 +209,12 @@ export default function Dashboard() {
                                 </View>
                                 {openMember == item.employee_id && (
                                     <View style={styles.detailBox}>
-                                        <Text>รหัสบัตรพนักงาน : {item.card_uid}</Text>
-                                        <Text>รหัสพนักงาน : {item.employee_id}</Text>
-                                        <Text>ชื่อเล่น : {item.nickname}</Text>
-                                        <Text>ตำแหน่ง : {item.department}</Text>
-                                        <Text>เบอร์โทร : {item.phone}</Text>
-                                        <Text>สถานะ : {item.status}</Text>
+                                        <Text style={{color:'#FFFFFF'}}>รหัสบัตรพนักงาน : {item.card_uid}</Text>
+                                        <Text style={{color:'#FFFFFF'}}>รหัสพนักงาน : {item.employee_id}</Text>
+                                        <Text style={{color:'#FFFFFF'}}>ชื่อเล่น : {item.nickname}</Text>
+                                        <Text style={{color:'#FFFFFF'}}>ตำแหน่ง : {item.department}</Text>
+                                        <Text style={{color:'#FFFFFF'}}>เบอร์โทร : {item.phone}</Text>
+                                        <Text style={{color:'#FFFFFF'}}>สถานะ : {item.status}</Text>
                                         <TouchableOpacity
                                             style={styles.historyBtn}
                                             onPress={() => {
@@ -255,8 +255,8 @@ export default function Dashboard() {
                                 <Text style={styles.department}>Department : {item.department}</Text>
                                 <Text style={[styles.status, {
                                     color: item.status == "Checked"
-                                        ? "#16A34A"
-                                        : "#EF4444"
+                                        ? "#34D399"
+                                        : "#FB7185"
                                 }]}>
                                     {item.status == "Checked"
                                         ? item.last_scan
@@ -274,7 +274,7 @@ export default function Dashboard() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F5F6FA",
+        backgroundColor: "#0B1120",
         padding: 15,
     },
     header: {
@@ -289,60 +289,67 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 28,
         fontWeight: "bold",
-        color: "#222",
+        color: "#FFFFFF",
     },
     date: {
         marginTop: 5,
         fontSize: 14,
-        color: "#666",
+        color: "#FFFFFF",
     },
     todayBtn: {
         marginTop: 8,
-        backgroundColor: "#000",
+        backgroundColor: "#0E7490",
         paddingVertical: 6,
         paddingHorizontal: 12,
         borderRadius: 8,
         alignItems: "center",
     },
     todayText: {
-        color: "#fff",
+        color: "#FFFFFF",
         fontSize: 13,
         fontWeight: "bold",
     },
     infoCard: {
-        backgroundColor: "#ffffffff",
-        borderRadius: 12,
-        borderColor: "#007bffff",
+        backgroundColor: "#111D2E",
+        borderRadius: 16,
+        borderColor: "#0891B2",
         borderWidth: 1.5,
-        paddingHorizontal: 15,
-        paddingTop: 15,
-        paddingBottom: 5,
+        paddingHorizontal: 18,
+        paddingTop: 16,
+        paddingBottom: 8,
+        shadowColor: "#06B6D4",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
         elevation: 4,
-
     },
     infoCard2: {
-        backgroundColor: "#ffffffff",
-        borderRadius: 12,
-        borderColor: "#ff0000ff",
+        backgroundColor: "#111D2E",
+        borderRadius: 16,
+        borderColor: "#E11D48",
         borderWidth: 1.5,
-        paddingHorizontal: 15,
-        paddingTop: 15,
-        paddingBottom: 5,
+        paddingHorizontal: 18,
+        paddingTop: 16,
+        paddingBottom: 8,
+        shadowColor: "#F43F5E",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
         elevation: 4,
     },
     cardTitle: {
-        color: "#000000ff",
+        color: "#FFFFFF",
         fontSize: 20,
         fontWeight: "600",
     },
     cardNumber: {
-        color: "#000000ff",
+        color: "#FFFFFF",
         fontSize: 50,
         fontWeight: "bold",
         marginLeft: 5
     },
     cardTitle2: {
-        color: "#000000ff",
+        color: "#FFFFFF",
         fontSize: 30,
         fontWeight: "600",
         marginTop: 10,
@@ -357,39 +364,45 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center",
         marginVertical: 18,
+        backgroundColor: "#1A2332",
+        borderRadius: 12,
+        padding: 4,
     },
     tab: {
         paddingVertical: 8,
         paddingHorizontal: 15,
+        borderRadius: 8,
     },
     activeTab: {
-        backgroundColor: "#000",
-        borderRadius: 8,
+        backgroundColor: "#0E7490",
     },
     tabText: {
         fontSize: 14,
         fontWeight: "600",
-        color: "#000",
+        color: "#FFFFFF",
     },
     activeText: {
-        color: "#fff",
+        color: "#FFFFFF",
     },
     memberCard: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#fff",
-        paddingVertical: 10,
+        borderColor: "#1E293B",
+        borderWidth: 1,
+        backgroundColor: "#111D2E",
+        paddingVertical: 12,
         paddingHorizontal: 14,
-        borderRadius: 12,
+        borderRadius: 14,
         marginBottom: 10,
-        elevation: 2,
     },
     avatar: {
         width: 50,
         height: 50,
         borderRadius: 25,
-        backgroundColor: "#DDD",
+        backgroundColor: "#1E293B",
         marginRight: 12,
+        borderWidth: 2,
+        borderColor: "#0E7490",
     },
     memberInfo: {
         flex: 1,
@@ -397,11 +410,11 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 16,
         fontWeight: "bold",
-        color: "#222",
+        color: "#FFFFFF",
     },
     department: {
         fontSize: 13,
-        color: "#777",
+        color: "#FFFFFF",
         marginTop: 2,
     },
     status: {
@@ -416,38 +429,41 @@ const styles = StyleSheet.create({
     searchBar: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#fff",
-        borderRadius: 10,
-        paddingHorizontal: 10,
+        backgroundColor: "#1A2332",
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: "#1E293B",
+        paddingHorizontal: 12,
         marginTop: 15,
         marginBottom: 15,
-        elevation: 2,
+        elevation: 4,
     },
     searchInput: {
         flex: 1,
         height: 45,
+        color: "#FFFFFF",
     },
     detailBox: {
         marginTop: 10,
         paddingTop: 10,
         borderTopWidth: 1,
-        borderColor: "#ddd",
+        borderColor: "#1E293B",
     },
     historyBtn: {
-        backgroundColor: "#000",
+        backgroundColor: "#0E7490",
         paddingVertical: 8,
         borderRadius: 8,
         marginTop: 10,
         marginBottom: 5,
     },
     historyText: {
-        color: "#fff",
+        color: "#E0F2FE",
         textAlign: "center",
         fontWeight: "bold",
     },
     historyItem: {
         fontSize: 13,
-        color: "#555",
+        color: "#94A3B8",
         marginTop: 4,
     },
 });

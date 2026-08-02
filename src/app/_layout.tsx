@@ -3,7 +3,33 @@ import { Tabs } from 'expo-router';
 
 export default function Layout() {
     return (
-        <Tabs screenOptions={{ tabBarActiveTintColor: '#000000ff' }}>
+        <Tabs screenOptions={{
+                tabBarActiveTintColor: '#22D3EE',
+                tabBarInactiveTintColor: '#64748B',
+                tabBarStyle: {
+                    backgroundColor: '#0F1729',
+                    borderTopColor: '#1E293B',
+                    borderTopWidth: 1,
+                    paddingTop: 4,
+                    height: 60,
+                },
+                tabBarLabelStyle: {
+                    fontSize: 11,
+                    fontWeight: '600',
+                    letterSpacing: 0.3,
+                },
+                headerStyle: {
+                    backgroundColor: '#0F1729',
+                    shadowColor: '#000',
+                    elevation: 8,
+                },
+                headerTintColor: '#F1F5F9',
+                headerTitleStyle: {
+                    fontWeight: '700',
+                    fontSize: 18,
+                    letterSpacing: 0.3,
+                },
+            }}>
             <Tabs.Screen
                 name="index"
                 options={{
