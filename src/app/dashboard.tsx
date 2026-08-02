@@ -88,7 +88,7 @@ export default function Dashboard() {
         <View style={styles.container}>
             <View style={styles.header}>
                 <View>
-                    <Text style={styles.title}>ข้อมูลการลงทะเบียน</Text>
+                    <Text style={styles.title}>ข้อมูลการลงทะเบียนd</Text>
                     <Text style={styles.date}>{formatDate(selectedDate)}</Text>
                 </View>
                 <View style={styles.calendarBox}>
