@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useState } from "react";
 import { FlatList, Image, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
@@ -86,19 +87,20 @@ export default function Dashboard() {
     };
     return (
         <View style={styles.container}>
+            {/* Header */}
             <View style={styles.header}>
                 <View>
-                    <Text style={styles.title}>ข้อมูลการลงทะเบียนd</Text>
+                    <Text style={styles.title}>Dashboard</Text>
                     <Text style={styles.date}>{formatDate(selectedDate)}</Text>
                 </View>
                 <View style={styles.calendarBox}>
-                    <TouchableOpacity onPress={() => setShowPicker(true)}>
-                        <Ionicons name="calendar" size={28} color="#94A3B8" />
+                    <TouchableOpacity style={styles.calendarBtn} onPress={() => setShowPicker(true)}>
+                        <Ionicons name="calendar-outline" size={20} color="#FFFFFF" />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.todayBtn}
                         onPress={() => setSelectedDate(new Date())}>
                         <Text style={styles.todayText}>Today</Text>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
             </View>
             {showPicker && (
@@ -111,27 +113,38 @@ export default function Dashboard() {
                         if (date) setSelectedDate(date);
                     }} />
             )}
-            <View style={styles.infoCard}>
-                <Text style={styles.cardTitle}>สมาชิกที่ลงทะเบียนแล้ว</Text>
-                <View style={styles.cardRow}>
+
+            {/* Stats Cards */}
+            <View style={styles.statsRow}>
+                <LinearGradient
+                    colors={['#059669', '#10B981']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.infoCard}
+                >
+                    <View style={styles.cardIconBox}>
+                        <Ionicons name="checkmark-circle" size={22} color="#FFFFFF" />
+                    </View>
                     <Text style={styles.cardNumber}>{checked}</Text>
-                    <Text style={styles.cardTitle2}>  คน</Text>
+                    <Text style={styles.cardLabel}>ลงทะเบียนแล้ว</Text>
+                </LinearGradient>
+                <View style={styles.infoCard2}>
+                    <View style={[styles.cardIconBox, { backgroundColor: '#FFF7ED' }]}>
+                        <Ionicons name="time" size={22} color="#F97316" />
+                    </View>
+                    <Text style={styles.cardNumber2}>{pending}</Text>
+                    <Text style={styles.cardLabel2}>รอลงทะเบียน</Text>
                 </View>
             </View>
-            <View style={[styles.infoCard2, { marginTop: 10 }]}>
-                <Text style={styles.cardTitle}>สมาชิกที่ยังไม่ได้ลงทะเบียน</Text>
-                <View style={styles.cardRow}>
-                    <Text style={styles.cardNumber}>{pending}</Text>
-                    <Text style={styles.cardTitle2}>  คน</Text>
-                </View>
-            </View>
+
+            {/* Tabs / Search */}
             {!searchMode ? (
                 <View style={styles.tabContainer}>
                     <TouchableOpacity
                         style={[styles.tab, tab == "All" && styles.activeTab]}
                         onPress={() => setTab("All")}>
                         <Text style={[styles.tabText, tab == "All" && styles.activeText]}>
-                            All Member
+                            All
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -151,13 +164,14 @@ export default function Dashboard() {
                     <TouchableOpacity
                         style={styles.searchBtn}
                         onPress={() => setSearchMode(true)}>
-                        <Ionicons name="search" size={22} color="#94A3B8" />
+                        <Ionicons name="search" size={20} color="#64748B" />
                     </TouchableOpacity>
                 </View>
             ) : (
                 <View style={styles.searchBar}>
+                    <Ionicons name="search" size={20} color="#10B981" style={{ marginRight: 8 }} />
                     <TextInput
-                        style={[styles.searchInput, { color: "#F8FAFC" }]}
+                        style={styles.searchInput}
                         placeholder="ค้นหา รหัส ชื่อ นามสกุล ชื่อเล่น แผนก"
                         placeholderTextColor="#94A3B8"
                         value={keyword}
@@ -171,14 +185,19 @@ export default function Dashboard() {
                             setOpenMember("");
                             setHistory([]);
                         }}>
-                        <Ionicons name="close" size={28} color="red" />
+                        <View style={styles.closeBtn}>
+                            <Ionicons name="close" size={18} color="#EF4444" />
+                        </View>
                     </TouchableOpacity>
                 </View>
             )}
+
+            {/* Member List */}
             {searchMode ? (
                 <FlatList
                     data={searchResult}
                     keyExtractor={(item) => item.employee_id}
+                    contentContainerStyle={{ paddingBottom: 20 }}
                     renderItem={({ item }) => (
                         <View style={styles.memberCard}>
                             <TouchableOpacity
@@ -195,7 +214,7 @@ export default function Dashboard() {
                                     <Image
                                         source={{
                                             uri: item.image == "" ?
-                                                `https://ui-avatars.com/api/?name=${item.firstname}+${item.lastname}`
+                                                `https://ui-avatars.com/api/?name=${item.firstname}+${item.lastname}&background=ECFDF5&color=059669`
                                                 : item.image
                                         }}
                                         style={styles.avatar} />
@@ -207,28 +226,53 @@ export default function Dashboard() {
                                             {item.department}
                                         </Text>
                                     </View>
+                                    <Ionicons 
+                                        name={openMember == item.employee_id ? "chevron-up" : "chevron-down"} 
+                                        size={20} color="#94A3B8" />
                                 </View>
                                 {openMember == item.employee_id && (
                                     <View style={styles.detailBox}>
-                                        <Text style={{color: '#CBD5E1'}}>รหัสบัตรพนักงาน : {item.card_uid}</Text>
-                                        <Text style={{color: '#CBD5E1'}}>รหัสพนักงาน : {item.employee_id}</Text>
-                                        <Text style={{color: '#CBD5E1'}}>ชื่อเล่น : {item.nickname}</Text>
-                                        <Text style={{color: '#CBD5E1'}}>ตำแหน่ง : {item.department}</Text>
-                                        <Text style={{color: '#CBD5E1'}}>เบอร์โทร : {item.phone}</Text>
-                                        <Text style={{color: '#CBD5E1'}}>สถานะ : {item.status}</Text>
+                                        <View style={styles.detailRow}>
+                                            <Text style={styles.detailLabel}>รหัสบัตร</Text>
+                                            <Text style={styles.detailValue}>{item.card_uid}</Text>
+                                        </View>
+                                        <View style={styles.detailRow}>
+                                            <Text style={styles.detailLabel}>รหัสพนักงาน</Text>
+                                            <Text style={styles.detailValue}>{item.employee_id}</Text>
+                                        </View>
+                                        <View style={styles.detailRow}>
+                                            <Text style={styles.detailLabel}>ชื่อเล่น</Text>
+                                            <Text style={styles.detailValue}>{item.nickname}</Text>
+                                        </View>
+                                        <View style={styles.detailRow}>
+                                            <Text style={styles.detailLabel}>ตำแหน่ง</Text>
+                                            <Text style={styles.detailValue}>{item.department}</Text>
+                                        </View>
+                                        <View style={styles.detailRow}>
+                                            <Text style={styles.detailLabel}>เบอร์โทร</Text>
+                                            <Text style={styles.detailValue}>{item.phone}</Text>
+                                        </View>
+                                        <View style={styles.detailRow}>
+                                            <Text style={styles.detailLabel}>สถานะ</Text>
+                                            <Text style={styles.detailValue}>{item.status}</Text>
+                                        </View>
                                         <TouchableOpacity
                                             style={styles.historyBtn}
                                             onPress={() => {
                                                 loadHistory(item.employee_id);
                                                 setShowHistory(!showHistory);
                                             }}>
+                                            <Ionicons name="time-outline" size={16} color="#FFFFFF" style={{ marginRight: 6 }} />
                                             <Text style={styles.historyText}>ประวัติการเช็คชื่อ</Text>
                                         </TouchableOpacity>
                                         {showHistory &&
                                             history.map((h: any, index: number) => (
-                                                <Text key={index} style={styles.historyItem}>
-                                                    {h.scan_time}
-                                                </Text>
+                                                <View key={index} style={styles.historyItemRow}>
+                                                    <View style={styles.historyDot} />
+                                                    <Text style={styles.historyItem}>
+                                                        {h.scan_time}
+                                                    </Text>
+                                                </View>
                                             ))
                                         }
                                     </View>
@@ -241,14 +285,15 @@ export default function Dashboard() {
                     refreshControl={
                         <RefreshControl
                             refreshing={refreshing}
-                            onRefresh={onRefresh} />}
+                            onRefresh={onRefresh}
+                            tintColor="#10B981" />}
                     contentContainerStyle={{ paddingBottom: 20 }}
                     renderItem={({ item }) => (
                         <View style={styles.memberCard}>
                             <Image
                                 source={{
                                     uri: item.image == "" ?
-                                        `https://ui-avatars.com/api/?name=${item.firstname}+${item.lastname}`
+                                        `https://ui-avatars.com/api/?name=${item.firstname}+${item.lastname}&background=ECFDF5&color=059669`
                                         : item.image
                                 }} style={styles.avatar} />
                             <View style={styles.memberInfo}>
@@ -256,12 +301,12 @@ export default function Dashboard() {
                                 <Text style={styles.department}>Department : {item.department}</Text>
                                 <Text style={[styles.status, {
                                     color: item.status == "Checked"
-                                        ? "#16A34A"
-                                        : "#EF4444"
+                                        ? "#10B981"
+                                        : "#F97316"
                                 }]}>
                                     {item.status == "Checked"
-                                        ? item.last_scan
-                                        : "Pending"}
+                                        ? `✓ ${item.last_scan}`
+                                        : "● Pending"}
                                 </Text>
 
                             </View>
@@ -275,176 +320,295 @@ export default function Dashboard() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#0F172A",
-        padding: 15,
+        padding: 16,
+        paddingTop: 50,
+        backgroundColor: "#FFFFFF",
     },
     header: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 15,
+        marginBottom: 20,
     },
     calendarBox: {
+        flexDirection: "row",
         alignItems: "center",
+        gap: 8,
+    },
+    calendarBtn: {
+        width: 42,
+        height: 42,
+        borderRadius: 14,
+        backgroundColor: "#10B981",
+        justifyContent: "center",
+        alignItems: "center",
+        shadowColor: '#059669',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25,
+        shadowRadius: 8,
+        elevation: 6,
     },
     title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        color: "#F8FAFC",
+        fontSize: 30,
+        fontWeight: "900",
+        color: "#1E293B",
+        letterSpacing: -0.5,
     },
     date: {
-        marginTop: 5,
+        marginTop: 4,
         fontSize: 14,
-        color: "#94A3B8",
+        color: "#64748B",
+        fontWeight: "600",
     },
     todayBtn: {
-        marginTop: 8,
-        backgroundColor: "#38BDF8",
-        paddingVertical: 6,
-        paddingHorizontal: 12,
-        borderRadius: 8,
+        backgroundColor: "#10B981",
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 14,
         alignItems: "center",
+        shadowColor: '#059669',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25,
+        shadowRadius: 8,
+        elevation: 6,
     },
     todayText: {
-        color: "#0F172A",
+        color: "#FFFFFF",
         fontSize: 13,
-        fontWeight: "bold",
+        fontWeight: "800",
+    },
+
+    /* Stats Cards */
+    statsRow: {
+        flexDirection: "row",
+        gap: 12,
+        marginBottom: 16,
     },
     infoCard: {
-        backgroundColor: "#1E293B",
-        borderColor: "#38BDF8",
-        borderWidth: 1.5,
-        borderRadius: 12,
-        paddingHorizontal: 15,
-        paddingTop: 15,
-        paddingBottom: 5,
+        flex: 1,
+        borderRadius: 20,
+        paddingHorizontal: 18,
+        paddingVertical: 20,
+        shadowColor: '#059669',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.3,
+        shadowRadius: 12,
+        elevation: 8,
     },
     infoCard2: {
-        backgroundColor: "#1E293B",
-        borderColor: "#EF4444",
-        borderWidth: 1.5,
-        borderRadius: 12,
-        paddingHorizontal: 15,
-        paddingTop: 15,
-        paddingBottom: 5
+        flex: 1,
+        backgroundColor: "#FFFFFF",
+        borderRadius: 20,
+        paddingHorizontal: 18,
+        paddingVertical: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.06,
+        shadowRadius: 10,
+        elevation: 3,
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
     },
-    cardTitle: {
-        color: "#F8FAFC",
-        fontSize: 20,
-        fontWeight: "600",
+    cardIconBox: {
+        width: 42,
+        height: 42,
+        borderRadius: 12,
+        backgroundColor: 'rgba(255, 255, 255, 0.25)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 12,
     },
     cardNumber: {
-        color: "#F8FAFC",
-        fontSize: 50,
-        fontWeight: "bold",
-        marginLeft: 5
+        color: "#FFFFFF",
+        fontSize: 34,
+        fontWeight: "900",
+        letterSpacing: -1,
     },
-    cardTitle2: {
-        color: "#94A3B8",
-        fontSize: 30,
+    cardLabel: {
+        color: "rgba(255,255,255,0.8)",
+        fontSize: 13,
         fontWeight: "600",
-        marginTop: 10,
+        marginTop: 4,
     },
-    cardRow: {
-        flexDirection: "row",
-        alignItems: "center",
+    cardNumber2: {
+        color: "#1E293B",
+        fontSize: 34,
+        fontWeight: "900",
+        letterSpacing: -1,
     },
+    cardLabel2: {
+        color: "#64748B",
+        fontSize: 13,
+        fontWeight: "600",
+        marginTop: 4,
+    },
+    
+    /* Tabs */
     tabContainer: {
         flexDirection: "row",
-        justifyContent: "space-around",
         alignItems: "center",
-        marginVertical: 18,
+        marginBottom: 16,
+        backgroundColor: "#F8FAFC",
+        borderRadius: 16,
+        padding: 4,
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
     },
     tab: {
-        paddingVertical: 8,
-        paddingHorizontal: 15,
+        flex: 1,
+        paddingVertical: 10,
+        borderRadius: 12,
+        alignItems: "center",
     },
     activeTab: {
-        backgroundColor: "#38BDF8",
-        borderRadius: 8,
+        backgroundColor: "#10B981",
+        shadowColor: '#059669',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 3,
     },
     tabText: {
-        fontSize: 14,
-        fontWeight: "600",
+        fontSize: 13,
+        fontWeight: "700",
         color: "#94A3B8",
     },
     activeText: {
-        color: "#0F172A",
+        color: "#FFFFFF",
     },
+
+    /* Member Cards */
     memberCard: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#1E293B",
-        paddingVertical: 10,
-        paddingHorizontal: 14,
-        borderRadius: 12,
+        backgroundColor: "#FFFFFF",
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        borderRadius: 18,
         marginBottom: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
         elevation: 2,
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
     },
     avatar: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: "#334155",
-        marginRight: 12,
+        width: 48,
+        height: 48,
+        borderRadius: 14,
+        backgroundColor: "#ECFDF5",
+        marginRight: 14,
     },
     memberInfo: {
         flex: 1,
     },
     name: {
         fontSize: 16,
-        fontWeight: "bold",
-        color: "#F8FAFC",
+        fontWeight: "700",
+        color: "#1E293B",
     },
     department: {
         fontSize: 13,
-        color: "#94A3B8",
-        marginTop: 2,
+        color: "#64748B",
+        marginTop: 3,
     },
     status: {
-        marginTop: 4,
+        marginTop: 5,
         fontSize: 12,
-        fontWeight: "bold",
+        fontWeight: "800",
     },
+
+    /* Search */
     searchBtn: {
-        marginLeft: 10,
-        padding: 6,
+        padding: 10,
+        borderRadius: 12,
+        backgroundColor: '#F1F5F9',
     },
     searchBar: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#1E293B",
-        borderRadius: 10,
-        paddingHorizontal: 10,
-        marginTop: 15,
-        marginBottom: 15,
-        elevation: 2,
+        backgroundColor: "#F8FAFC",
+        borderRadius: 16,
+        paddingHorizontal: 14,
+        marginBottom: 16,
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
     },
     searchInput: {
         flex: 1,
-        height: 45,
+        height: 50,
+        color: "#1E293B",
+        fontSize: 15,
     },
+    closeBtn: {
+        width: 32,
+        height: 32,
+        borderRadius: 10,
+        backgroundColor: '#FEF2F2',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    /* Detail Box */
     detailBox: {
-        marginTop: 10,
-        paddingTop: 10,
+        marginTop: 12,
+        paddingTop: 12,
         borderTopWidth: 1,
-        borderColor: "#334155",
+        borderColor: "#F1F5F9",
+    },
+    detailRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingVertical: 5,
+    },
+    detailLabel: {
+        fontSize: 13,
+        color: "#94A3B8",
+        fontWeight: "600",
+    },
+    detailValue: {
+        fontSize: 13,
+        color: "#1E293B",
+        fontWeight: "700",
     },
     historyBtn: {
-        backgroundColor: "#38BDF8",
-        paddingVertical: 8,
-        borderRadius: 8,
-        marginTop: 10,
+        flexDirection: "row",
+        backgroundColor: "#10B981",
+        paddingVertical: 11,
+        borderRadius: 12,
+        marginTop: 14,
         marginBottom: 5,
+        justifyContent: "center",
+        alignItems: "center",
+        shadowColor: '#059669',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.25,
+        shadowRadius: 6,
+        elevation: 4,
     },
     historyText: {
-        color: "#0F172A",
+        color: "#FFFFFF",
         textAlign: "center",
-        fontWeight: "bold",
+        fontWeight: "800",
+        fontSize: 14,
+    },
+    historyItemRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: 4,
+    },
+    historyDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: "#10B981",
+        marginRight: 10,
     },
     historyItem: {
         fontSize: 13,
-        color: "#CBD5E1",
-        marginTop: 4,
+        color: "#64748B",
+        fontWeight: '500',
     },
 });

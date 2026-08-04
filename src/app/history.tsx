@@ -8,7 +8,10 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  View,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function History() {
   // ฟังก์ชันแสดงวันเวลาปัจจุบัน
@@ -97,96 +100,85 @@ export default function History() {
     }
   };
 
+  const renderInput = (icon: string, placeholder: string, value: string, onChangeText: (t: string) => void, extra?: object) => (
+    <View style={styles.inputRow}>
+      <View style={styles.inputIcon}>
+        <Ionicons name={icon as any} size={18} color="#10B981" />
+      </View>
+      <TextInput
+        style={styles.input}
+        placeholder={placeholder}
+        placeholderTextColor="#94A3B8"
+        value={value}
+        onChangeText={onChangeText}
+        {...extra}
+      />
+    </View>
+  );
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={{ paddingBottom: 80 }}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-      >
-        <Text style={styles.title}>เพิ่มข้อมูลพนักงาน</Text>
+      <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={{ paddingBottom: 40 }}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <Text style={styles.title}>เพิ่มข้อมูลพนักงาน</Text>
 
-        <TextInput
-          style={styles.carduid}
-          placeholder="เลขบัตรประจำตัวพนักงาน"
-          placeholderTextColor="#FFFFFF"
-          value={card_uid}
-          onChangeText={setCard_uid}
-        />
+          {/* Card UID - highlighted */}
+          <View style={styles.cardUidRow}>
+            <View style={styles.cardUidIcon}>
+              <Ionicons name="card-outline" size={20} color="#FFFFFF" />
+            </View>
+            <TextInput
+              style={styles.cardUidInput}
+              placeholder="เลขบัตรประจำตัวพนักงาน"
+              placeholderTextColor="#94A3B8"
+              value={card_uid}
+              onChangeText={setCard_uid}
+            />
+          </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="ชื่อ"
-          placeholderTextColor="#FFFFFF"
-          value={firstname}
-          onChangeText={setFirstName}
-        />
+          {renderInput("person-outline", "ชื่อ", firstname, setFirstName)}
+          {renderInput("person-outline", "นามสกุล", lastname, setLastName)}
+          {renderInput("happy-outline", "ชื่อเล่น", nickname, setNickname)}
+          {renderInput("id-card-outline", "รหัสพนักงาน", employee_id, setEmployee_id)}
+          {renderInput("business-outline", "แผนก", department, setDepartment)}
+          {renderInput("call-outline", "เบอร์โทร", phone, setPhone, { keyboardType: "phone-pad" })}
+          {renderInput("image-outline", "URL รูปภาพ", image, setImage)}
 
-        <TextInput
-          style={styles.input}
-          placeholder="นามสกุล"
-          placeholderTextColor="#FFFFFF"
-          value={lastname}
-          onChangeText={setLastName}
-        />
+          {/* Date (readonly) */}
+          <View style={[styles.inputRow, { opacity: 0.6 }]}>
+            <View style={styles.inputIcon}>
+              <Ionicons name="calendar-outline" size={18} color="#10B981" />
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="วันที่สร้าง"
+              placeholderTextColor="#94A3B8"
+              value={create_date}
+              editable={false}
+            />
+          </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="ชื่อเล่น"
-          placeholderTextColor="#FFFFFF"
-          value={nickname}
-          onChangeText={setNickname}
-        />
-
-        <TextInput
-          style={styles.input}
-          placeholder="รหัสพนักงาน"
-          placeholderTextColor="#FFFFFF"
-          value={employee_id}
-          onChangeText={setEmployee_id}
-        />
-
-
-        <TextInput
-          style={styles.input}
-          placeholder="แผนก"
-          placeholderTextColor="#FFFFFF"
-          value={department}
-          onChangeText={setDepartment}
-        />
-
-        <TextInput
-          style={styles.input}
-          placeholder="เบอร์โทร"
-          placeholderTextColor="#FFFFFF"
-          value={phone}
-          onChangeText={setPhone}
-        />
-
-        <TextInput
-          style={styles.input}
-          placeholder="URL รูปภาพ"
-          placeholderTextColor="#FFFFFF"
-          value={image}
-          onChangeText={setImage}
-        />
-
-        <TextInput
-          style={styles.input}
-          placeholder="วันที่สร้าง"
-          placeholderTextColor="#FFFFFF"
-          value={create_date}
-          editable={false}
-        />
-
-        <TouchableOpacity style={styles.button} onPress={saveData}>
-          <Text style={styles.buttonText}>บันทึกข้อมูล</Text>
-        </TouchableOpacity>
-      </ScrollView>
+          <TouchableOpacity activeOpacity={0.8} onPress={saveData}>
+            <LinearGradient
+              colors={['#059669', '#10B981']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.button}
+            >
+              <Ionicons name="save-outline" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
+              <Text style={styles.buttonText}>บันทึกข้อมูล</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -195,51 +187,92 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#0F172A",
+    paddingTop: 50,
   },
 
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 28,
+    fontWeight: "900",
     textAlign: "center",
-    marginVertical: 20,
-    color: "#F8FAFC",
+    marginBottom: 24,
+    color: "#1E293B",
+    letterSpacing: -0.5,
   },
 
-  input: {
-    backgroundColor: "#1E293B",
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: "#F8FAFC",
     borderWidth: 1,
-    borderColor: "#334155",
+    borderColor: "#E2E8F0",
+    borderRadius: 14,
+    marginBottom: 12,
+    paddingHorizontal: 4,
+  },
+  inputIcon: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    flex: 1,
+    padding: 14,
+    fontSize: 15,
+    color: "#1E293B",
+  },
+
+  cardUidRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: "#F8FAFC",
+    borderWidth: 2,
+    borderColor: "#10B981",
+    borderRadius: 16,
+    marginBottom: 18,
+    paddingHorizontal: 4,
+    shadowColor: '#10B981',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.12,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  cardUidIcon: {
+    width: 36,
+    height: 36,
     borderRadius: 10,
-    padding: 12,
-    marginBottom: 15,
-    fontSize: 16,
-    color: "#F8FAFC",
+    backgroundColor: '#10B981',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 4,
+  },
+  cardUidInput: {
+    flex: 1,
+    padding: 14,
+    fontSize: 15,
+    color: "#1E293B",
+    fontWeight: '600',
   },
 
   button: {
-    backgroundColor: "#38BDF8",
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 16,
+    marginTop: 12,
     marginBottom: 20,
+    shadowColor: '#059669',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 6,
   },
 
   buttonText: {
-    color: "#0F172A",
+    color: "#FFFFFF",
     textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 18,
+    fontWeight: "900",
+    fontSize: 17,
   },
-  carduid: {
-    backgroundColor: "#1E293B",
-    borderWidth: 1,
-    borderColor: "#38BDF8",
-    borderRadius: 10,
-    padding: 12,
-    marginBottom: 15,
-    fontSize: 16,
-    color: "#F8FAFC",
-  }
-
 });

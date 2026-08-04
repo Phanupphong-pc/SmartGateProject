@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // 💡 1. [เพิ่ม] กำหนดค่า BASE_URL
 const BASE_URL = "http://10.79.230.211/SmartGate/api";
@@ -164,122 +166,145 @@ export default function MemberEdit() {
     };
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>จัดการข้อมูลสมาชิก</Text>
+        <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+            <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+                <Text style={styles.title}>จัดการข้อมูลสมาชิก</Text>
 
-            {/* โซนค้นหา */}
-            <TextInput
-                style={[styles.input, { color: "#F8FAFC" }]}
-                placeholder="กรอกรหัสพนักงานที่ต้องการค้นหา"
-                placeholderTextColor="#FFFFFF"
-                value={searchId}
-                onChangeText={setSearchId}
-            />
-            <TouchableOpacity
-                style={styles.searchButton}
-                onPress={searchMember}
-                activeOpacity={0.8}
-            >
-                <Text style={styles.searchButtonText}>ค้นหาข้อมูล</Text>
-            </TouchableOpacity>
+                {/* โซนค้นหา */}
+                <View style={styles.searchRow}>
+                    <View style={styles.searchIconBox}>
+                        <Ionicons name="search" size={20} color="#10B981" />
+                    </View>
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="กรอกรหัสพนักงานที่ต้องการค้นหา"
+                        placeholderTextColor="#94A3B8"
+                        value={searchId}
+                        onChangeText={setSearchId}
+                    />
+                </View>
+                <TouchableOpacity activeOpacity={0.8} onPress={searchMember}>
+                    <LinearGradient
+                        colors={['#059669', '#10B981']}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        style={styles.searchButton}
+                    >
+                        <Ionicons name="search" size={18} color="#FFFFFF" style={{ marginRight: 8 }} />
+                        <Text style={styles.searchButtonText}>ค้นหาข้อมูล</Text>
+                    </LinearGradient>
+                </TouchableOpacity>
 
-            {/* โซนฟอร์มแก้ไข/ลบข้อมูล */}
-            {isFound && (
-                <View style={styles.editForm}>
-                    <Text style={styles.subTitle}>แก้ไขรายละเอียดสมาชิก</Text>
+                {/* โซนฟอร์มแก้ไข/ลบข้อมูล */}
+                {isFound && (
+                    <View style={styles.editForm}>
+                        <View style={styles.formHeader}>
+                            <Ionicons name="create-outline" size={20} color="#10B981" />
+                            <Text style={styles.subTitle}>แก้ไขรายละเอียดสมาชิก</Text>
+                        </View>
 
-                    <Text style={styles.label}>1. Card UID:</Text>
-                    <TextInput style={styles.input} value={card_uid} onChangeText={setCard_uid} />
+                        <Text style={styles.label}>1. Card UID:</Text>
+                        <TextInput style={styles.input} value={card_uid} onChangeText={setCard_uid} placeholderTextColor="#94A3B8" />
 
-                    <Text style={styles.label}>2. รหัสพนักงาน (Employee ID):</Text>
-                    <TextInput style={styles.input} value={employee_id} onChangeText={setEmployee_id} />
+                        <Text style={styles.label}>2. รหัสพนักงาน (Employee ID):</Text>
+                        <TextInput style={styles.input} value={employee_id} onChangeText={setEmployee_id} placeholderTextColor="#94A3B8" />
 
-                    <Text style={styles.label}>3. ชื่อ (Firstname):</Text>
-                    <TextInput style={styles.input} value={firstname} onChangeText={setFirstName} />
+                        <Text style={styles.label}>3. ชื่อ (Firstname):</Text>
+                        <TextInput style={styles.input} value={firstname} onChangeText={setFirstName} placeholderTextColor="#94A3B8" />
 
-                    <Text style={styles.label}>4. นามสกุล (Lastname):</Text>
-                    <TextInput style={styles.input} value={lastname} onChangeText={setLastName} />
+                        <Text style={styles.label}>4. นามสกุล (Lastname):</Text>
+                        <TextInput style={styles.input} value={lastname} onChangeText={setLastName} placeholderTextColor="#94A3B8" />
 
-                    <Text style={styles.label}>5. ชื่อเล่น (Nickname):</Text>
-                    <TextInput style={styles.input} value={nickname} onChangeText={setNickname} />
+                        <Text style={styles.label}>5. ชื่อเล่น (Nickname):</Text>
+                        <TextInput style={styles.input} value={nickname} onChangeText={setNickname} placeholderTextColor="#94A3B8" />
 
-                    <Text style={styles.label}>6. แผนก (Department):</Text>
-                    <TextInput style={styles.input} value={department} onChangeText={setDepartment} />
+                        <Text style={styles.label}>6. แผนก (Department):</Text>
+                        <TextInput style={styles.input} value={department} onChangeText={setDepartment} placeholderTextColor="#94A3B8" />
 
-                    <Text style={styles.label}>7. เบอร์โทร (Phone):</Text>
-                    <TextInput style={styles.input} value={phone} onChangeText={setPhone} keyboardType="phone-pad" />
+                        <Text style={styles.label}>7. เบอร์โทร (Phone):</Text>
+                        <TextInput style={styles.input} value={phone} onChangeText={setPhone} keyboardType="phone-pad" placeholderTextColor="#94A3B8" />
 
-                    <Text style={styles.label}>8. รูปภาพ (Image Path/URL):</Text>
-                    <TextInput style={styles.input} value={image} onChangeText={setImage} />
+                        <Text style={styles.label}>8. รูปภาพ (Image Path/URL):</Text>
+                        <TextInput style={styles.input} value={image} onChangeText={setImage} placeholderTextColor="#94A3B8" />
 
-                    <Text style={styles.label}>9. สถานะ (Status):</Text>
-                    <View style={styles.statusContainer}>
-                        <TouchableOpacity
-                            style={[
-                                styles.statusButton,
-                                status === 'Active' && styles.statusActiveBtn
-                            ]}
-                            onPress={() => setStatus('Active')}
-                        >
-                            <Text style={[
-                                styles.statusText,
-                                status === 'Active' && styles.statusActiveText
-                            ]}>
-                                Active
-                            </Text>
+                        <Text style={styles.label}>9. สถานะ (Status):</Text>
+                        <View style={styles.statusContainer}>
+                            <TouchableOpacity
+                                style={[
+                                    styles.statusButton,
+                                    status === 'Active' ? styles.statusActiveBtn : styles.statusDefault
+                                ]}
+                                onPress={() => setStatus('Active')}
+                                activeOpacity={0.8}
+                            >
+                                <Ionicons name="checkmark-circle" size={16} color={status === 'Active' ? '#10B981' : '#94A3B8'} style={{ marginRight: 6 }} />
+                                <Text style={[
+                                    styles.statusText,
+                                    status === 'Active' && styles.statusActiveText
+                                ]}>
+                                    Active
+                                </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={[
+                                    styles.statusButton,
+                                    status === 'Inactive' ? styles.statusInactiveBtn : styles.statusDefault
+                                ]}
+                                onPress={() => setStatus('Inactive')}
+                                activeOpacity={0.8}
+                            >
+                                <Ionicons name="close-circle" size={16} color={status === 'Inactive' ? '#EF4444' : '#94A3B8'} style={{ marginRight: 6 }} />
+                                <Text style={[
+                                    styles.statusText,
+                                    status === 'Inactive' && styles.statusInactiveText
+                                ]}>
+                                    Inactive
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <Text style={styles.label}>10. วันที่สร้าง (Create Date):</Text>
+                        <TextInput
+                            style={[styles.input, styles.disabledInput]}
+                            value={create_date}
+                            editable={false}
+                        />
+
+                        <Text style={styles.label}>11. วันที่แก้ไขล่าสุด (Edit Date):</Text>
+                        <TextInput
+                            style={[styles.input, styles.disabledInput]}
+                            value={edit_date}
+                            editable={false}
+                            placeholder="ระบบจะบันทึกให้อัตโนมัติ"
+                            placeholderTextColor="#94A3B8"
+                        />
+
+                        {/* ปุ่มบันทึกการแก้ไข */}
+                        <TouchableOpacity activeOpacity={0.8} onPress={updateMember}>
+                            <LinearGradient
+                                colors={['#059669', '#10B981']}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 0 }}
+                                style={styles.saveButton}
+                            >
+                                <Ionicons name="save-outline" size={18} color="#FFFFFF" style={{ marginRight: 8 }} />
+                                <Text style={styles.saveButtonText}>บันทึกการแก้ไข</Text>
+                            </LinearGradient>
                         </TouchableOpacity>
 
+                        {/* ปุ่มลบข้อมูล */}
                         <TouchableOpacity
-                            style={[
-                                styles.statusButton,
-                                status === 'Inactive' && styles.statusInactiveBtn
-                            ]}
-                            onPress={() => setStatus('Inactive')}
+                            style={styles.deleteButton}
+                            onPress={deleteMember}
+                            activeOpacity={0.8}
                         >
-                            <Text style={[
-                                styles.statusText,
-                                status === 'Inactive' && styles.statusInactiveText
-                            ]}>
-                                Inactive
-                            </Text>
+                            <Ionicons name="trash-outline" size={18} color="#EF4444" style={{ marginRight: 8 }} />
+                            <Text style={styles.deleteButtonText}>ลบข้อมูล</Text>
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.label}>10. วันที่สร้าง (Create Date):</Text>
-                    <TextInput
-                        style={[styles.input, styles.disabledInput]}
-                        value={create_date}
-                        editable={false}
-                    />
-
-                    <Text style={styles.label}>11. วันที่แก้ไขล่าสุด (Edit Date):</Text>
-                    <TextInput
-                        style={[styles.input, styles.disabledInput]}
-                        value={edit_date}
-                        editable={false}
-                        placeholder="ระบบจะบันทึกให้อัตโนมัติ"
-                        placeholderTextColor="#FFFFFF"
-                    />
-
-                    {/* ปุ่มบันทึกการแก้ไข */}
-                    <TouchableOpacity
-                        style={[styles.actionButton, styles.saveButton]}
-                        onPress={updateMember}
-                        activeOpacity={0.8}
-                    >
-                        <Text style={styles.actionButtonText}>บันทึกการแก้ไข</Text>
-                    </TouchableOpacity>
-
-                    {/* ปุ่มลบข้อมูล */}
-                    <TouchableOpacity
-                        style={[styles.actionButton, styles.deleteButton]}
-                        onPress={deleteMember}
-                        activeOpacity={0.8}
-                    >
-                        <Text style={styles.actionButtonText}>ลบข้อมูล</Text>
-                    </TouchableOpacity>
-                </View>
-            )}
-        </ScrollView>
+                )}
+            </ScrollView>
+        </View>
     );
 }
 
@@ -287,127 +312,174 @@ const styles = StyleSheet.create({
     container: {
         padding: 20,
         paddingTop: 50,
-        backgroundColor: "#0F172A",
         flexGrow: 1,
+        paddingBottom: 40,
     },
     title: {
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontSize: 28,
+        fontWeight: '900',
         marginBottom: 20,
         textAlign: 'center',
-        color: "#F8FAFC",
+        color: "#1E293B",
+        letterSpacing: -0.5,
     },
     subTitle: {
         fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 15,
-        textAlign: 'center',
-        color: '#F8FAFC',
+        fontWeight: '800',
+        color: '#1E293B',
+        marginLeft: 8,
+    },
+    formHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
     },
     label: {
-        fontSize: 14,
-        marginBottom: 4,
-        color: '#94A3B8',
-        fontWeight: '500',
+        fontSize: 13,
+        marginBottom: 6,
+        color: '#64748B',
+        fontWeight: '600',
+    },
+    searchRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: "#F8FAFC",
+        borderWidth: 1,
+        borderColor: "#E2E8F0",
+        borderRadius: 16,
+        marginBottom: 14,
+        paddingHorizontal: 4,
+    },
+    searchIconBox: {
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    searchInput: {
+        flex: 1,
+        padding: 14,
+        fontSize: 15,
+        color: "#1E293B",
     },
     input: {
-        backgroundColor: "#1E293B",
+        backgroundColor: "#F8FAFC",
         borderWidth: 1,
-        borderColor: "#334155",
-        borderRadius: 10,
-        padding: 12,
-        marginBottom: 15,
-        fontSize: 16,
-        color: "#F8FAFC",
+        borderColor: "#E2E8F0",
+        borderRadius: 12,
+        padding: 14,
+        marginBottom: 14,
+        fontSize: 15,
+        color: "#1E293B",
     },
     disabledInput: {
-        backgroundColor: '#334155',
+        backgroundColor: '#F1F5F9',
         color: '#94A3B8',
+        borderColor: '#E2E8F0',
     },
     editForm: {
-        marginTop: 20,
-        padding: 15,
+        marginTop: 10,
+        padding: 20,
         borderWidth: 1,
-        borderColor: '#334155',
-        backgroundColor: '#1E293B',
-        borderRadius: 5,
+        borderColor: '#E2E8F0',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 22,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.06,
+        shadowRadius: 10,
+        elevation: 3,
     },
     statusContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 12,
+        marginBottom: 14,
+        gap: 12,
     },
     statusButton: {
         flex: 1,
-        paddingVertical: 10,
+        flexDirection: 'row',
+        paddingVertical: 12,
         borderWidth: 1,
-        borderColor: '#334155',
-        borderRadius: 5,
+        borderRadius: 12,
         alignItems: 'center',
-        backgroundColor: '#1E293B',
-        marginHorizontal: 4,
+        justifyContent: 'center',
+    },
+    statusDefault: {
+        backgroundColor: '#F8FAFC',
+        borderColor: '#E2E8F0',
     },
     statusActiveBtn: {
-        backgroundColor: '#10B981', // สีเขียวเมื่อเลือก Active
+        backgroundColor: '#ECFDF5',
         borderColor: '#10B981',
     },
     statusInactiveBtn: {
-        backgroundColor: '#EF4444', // สีแดงเมื่อเลือก Inactive
+        backgroundColor: '#FEF2F2',
         borderColor: '#EF4444',
     },
     statusText: {
         fontSize: 14,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: '#94A3B8',
     },
     statusActiveText: {
-        color: '#F8FAFC',
+        color: '#10B981',
     },
     statusInactiveText: {
-        color: '#F8FAFC',
+        color: '#EF4444',
     },
 
-    actionButton: {
-        paddingVertical: 15,
-        borderRadius: 10,
+    saveButton: {
+        flexDirection: 'row',
+        paddingVertical: 16,
+        borderRadius: 14,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 2,
+        marginTop: 18,
+        shadowColor: '#059669',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 6,
     },
-    saveButton: {
-        backgroundColor: '#10B981',
-        marginTop: 15,
+    saveButtonText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: '900',
     },
     deleteButton: {
-        backgroundColor: '#EF4444',
-    },
-    actionButtonText: {
-        color: '#F8FAFC',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    searchButton: {
-        backgroundColor: '#38BDF8',
-        paddingVertical: 15,
-        borderRadius: 10,
+        flexDirection: 'row',
+        paddingVertical: 16,
+        borderRadius: 14,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
-        marginBottom: 15,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 2,
+        backgroundColor: '#FEF2F2',
+        borderWidth: 1,
+        borderColor: '#FECACA',
+    },
+    deleteButtonText: {
+        color: '#EF4444',
+        fontSize: 16,
+        fontWeight: '800',
+    },
+    searchButton: {
+        flexDirection: 'row',
+        paddingVertical: 16,
+        borderRadius: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        shadowColor: '#059669',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 6,
     },
     searchButtonText: {
-        color: '#0F172A',
-        fontSize: 18,
-        fontWeight: 'bold',
+        color: '#FFFFFF',
+        fontSize: 17,
+        fontWeight: '900',
     },
 });
