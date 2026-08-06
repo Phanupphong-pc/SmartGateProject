@@ -16,12 +16,7 @@ set_exception_handler(function($e) {
     exit();
 });
 
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "smartgate";
-
-$conn = new mysqli($host, $user, $pass, $dbname);
+$conn = new mysqli("localhost", "root", "", "smartgate");
 $conn->set_charset("utf8mb4");
 
 if ($conn->connect_error) {
@@ -29,10 +24,9 @@ if ($conn->connect_error) {
     exit();
 }
 
-// 💡 ดึงข้อมูลแบบ JSON Body (แทน $_POST เดิม)
 $data = json_decode(file_get_contents("php://input"), true);
 
-// รับค่าจาก React Native
+
 $old_employee_id = isset($data['old_employee_id']) ? trim($data['old_employee_id']) : '';
 $card_uid = isset($data['card_uid']) ? trim($data['card_uid']) : '';
 $employee_id = isset($data['employee_id']) ? trim($data['employee_id']) : '';
@@ -50,9 +44,8 @@ if (empty($old_employee_id) || empty($employee_id) || empty($firstname) || empty
     exit();
 }
 
-$edit_date = date("Y-m-d H:i:s"); // อัปเดตเวลาแก้ไขล่าสุด
+$edit_date = date("Y-m-d H:i:s"); 
 
-// กรณีที่ 1: ไม่ได้เปลี่ยน รหัสพนักงาน
 if ($old_employee_id === $employee_id) {
     $sql = "UPDATE memberlist SET 
                 card_uid = ?, 
@@ -77,9 +70,9 @@ if ($old_employee_id === $employee_id) {
     }
     $stmt->close();
 }
-// กรณีที่ 2: มีการเปลี่ยน รหัสพนักงาน ใหม่
+
 else {
-    // เช็คก่อนว่ารหัสใหม่ซ้ำไหม
+
     $check_stmt = $conn->prepare("SELECT employee_id FROM memberlist WHERE employee_id = ?");
     $check_stmt->bind_param("s", $employee_id);
     $check_stmt->execute();
@@ -89,13 +82,11 @@ else {
     }
     $check_stmt->close();
 
-    // ลบเรคคอร์ดเดิม
     $del_stmt = $conn->prepare("DELETE FROM memberlist WHERE employee_id = ?");
     $del_stmt->bind_param("s", $old_employee_id);
     $del_stmt->execute();
     $del_stmt->close();
 
-    // บันทึกเรคคอร์ดใหม่
     $ins_sql = "INSERT INTO memberlist (card_uid, employee_id, firstname, lastname, nickname, department, phone, image, status, create_date, edit_date) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $ins_stmt = $conn->prepare($ins_sql);

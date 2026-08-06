@@ -3,14 +3,12 @@ import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
-// 💡 1. [เพิ่ม] กำหนดค่า BASE_URL
 const BASE_URL = "http://10.79.230.211/SmartGate/api";
 
 export default function MemberEdit() {
     const [searchId, setSearchId] = useState<string>("");
     const [old_employee_id, setOldEmployeeId] = useState<string>("");
 
-    // State ตัวแปร snake_case
     const [card_uid, setCard_uid] = useState<string>("");
     const [employee_id, setEmployee_id] = useState<string>("");
     const [firstname, setFirstName] = useState<string>("");
@@ -25,7 +23,6 @@ export default function MemberEdit() {
 
     const [isFound, setIsFound] = useState<boolean>(false);
 
-    // 💡 2. [ย้ายขึ้นมาบนสุด] ฟังก์ชันแสดงวันเวลาปัจจุบัน (รูปแบบ YYYY-MM-DD HH:mm:ss)
     const getCurrentDate = () => {
         const now = new Date();
 
@@ -40,7 +37,6 @@ export default function MemberEdit() {
         return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
     };
 
-    // 1. ค้นหาพนักงาน
     const searchMember = async (): Promise<void> => {
         if (!searchId.trim()) {
             Alert.alert("แจ้งเตือน", "กรุณากรอกรหัสพนักงาน");
@@ -66,10 +62,8 @@ export default function MemberEdit() {
                 setImage(json.data.image || "");
                 setStatus(json.data.status || "");
 
-                // 💡 3. [แก้] ถ้า DB ไม่มี create_date ให้ใช้วันเวลาปัจจุบันแทน
                 setCreateDate(json.data.create_date || getCurrentDate());
 
-                // 💡 4. [แก้] ตั้งค่าวันที่แก้ไขเป็นเวลาปัจจุบัน
                 setEditDate(getCurrentDate());
 
                 setIsFound(true);
@@ -82,14 +76,12 @@ export default function MemberEdit() {
         }
     };
 
-    // 2. บันทึกการแก้ไข
     const updateMember = async (): Promise<void> => {
         if (!employee_id.trim() || !firstname.trim() || !lastname.trim()) {
             Alert.alert("แจ้งเตือน", "กรุณากรอกข้อมูลสำคัญให้ครบถ้วน");
             return;
         }
 
-        // 💡 5. [เพิ่ม] ดึงเวลาปัจจุบันเพื่อบันทึกเป็น edit_date ล่าสุด ณ วินาทีที่กดบันทึก
         const currentNow = getCurrentDate();
         setEditDate(currentNow);
 
@@ -111,7 +103,7 @@ export default function MemberEdit() {
                     image,
                     status,
                     create_date,
-                    edit_date: currentNow, // ส่งเวลาปัจจุบันไปยังฝั่ง PHP
+                    edit_date: currentNow,
                 }),
             });
 
@@ -129,7 +121,6 @@ export default function MemberEdit() {
         }
     };
 
-    // 3. ลบข้อมูล
     const deleteMember = async (): Promise<void> => {
         Alert.alert("ยืนยันการลบ", `คุณต้องการลบพนักงานรหัส ${old_employee_id} ใช่หรือไม่?`, [
             { text: "ยกเลิก", style: "cancel" },
@@ -170,7 +161,6 @@ export default function MemberEdit() {
             <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
                 <Text style={styles.title}>จัดการข้อมูลสมาชิก</Text>
 
-                {/* โซนค้นหา */}
                 <View style={styles.searchRow}>
                     <View style={styles.searchIconBox}>
                         <Ionicons name="search" size={20} color="#10B981" />
@@ -195,7 +185,6 @@ export default function MemberEdit() {
                     </LinearGradient>
                 </TouchableOpacity>
 
-                {/* โซนฟอร์มแก้ไข/ลบข้อมูล */}
                 {isFound && (
                     <View style={styles.editForm}>
                         <View style={styles.formHeader}>
@@ -279,7 +268,6 @@ export default function MemberEdit() {
                             placeholderTextColor="#94A3B8"
                         />
 
-                        {/* ปุ่มบันทึกการแก้ไข */}
                         <TouchableOpacity activeOpacity={0.8} onPress={updateMember}>
                             <LinearGradient
                                 colors={['#059669', '#10B981']}
@@ -292,7 +280,6 @@ export default function MemberEdit() {
                             </LinearGradient>
                         </TouchableOpacity>
 
-                        {/* ปุ่มลบข้อมูล */}
                         <TouchableOpacity
                             style={styles.deleteButton}
                             onPress={deleteMember}

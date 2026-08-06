@@ -10,28 +10,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 error_reporting(0);
 ini_set('display_errors', 0);
 
-set_exception_handler(function($e) {
+set_exception_handler(function ($e) {
     echo json_encode(["status" => "error", "message" => "ระบบขัดข้อง: " . $e->getMessage()]);
     exit();
 });
 
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "smartgate";
-
-$conn = new mysqli($host, $user, $pass, $dbname);
-$conn->set_charset("utf8mb4");
+$conn = new mysqli("localhost", "root", "", "smartgate");
+$conn->set_charset("utf8mb4");  //ทำให้ข้อมูลไม่ต่างด้าว
 
 if ($conn->connect_error) {
     echo json_encode(["status" => "error", "message" => "เชื่อมต่อฐานข้อมูลล้มเหลว"]);
     exit();
 }
 
-$data = json_decode(file_get_contents("php://input"), true);
-$employee_id = isset($data['employee_id']) ? trim($data['employee_id']) : '';
+$data = json_decode(file_get_contents("php://input"), true); 
+$employee_id = isset($data['employee_id']) ? trim($data['employee_id']) : ''; 
 
-if (empty($employee_id)) {
+if (empty($employee_id)) {  
     echo json_encode(["status" => "error", "message" => "ไม่พบรหัสพนักงานที่จะลบ"]);
     exit();
 }

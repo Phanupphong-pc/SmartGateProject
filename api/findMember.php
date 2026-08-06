@@ -11,12 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 error_reporting(0);
 ini_set('display_errors', 0);
 
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "smartgate";
-
-$conn = new mysqli($host, $user, $pass, $dbname);
+$conn = new mysqli("localhost", "root", "", "smartgate");
 $conn->set_charset("utf8mb4");
 
 if ($conn->connect_error) {
@@ -31,8 +26,7 @@ if (empty($employee_id)) {
     exit();
 }
 
-$sql = "SELECT * FROM memberlist WHERE employee_id = ?";
-$stmt = $conn->prepare($sql);
+$stmt = $conn->prepare("SELECT * FROM memberlist WHERE employee_id = ?");
 $stmt->bind_param("s", $employee_id);
 $stmt->execute();
 $result = $stmt->get_result();
