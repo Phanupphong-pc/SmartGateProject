@@ -40,7 +40,7 @@ export default function Layout() {
                 }}
             />
             <Tabs.Screen
-                name="history"
+                name="addData"
                 options={{
                     title: 'Add',
                     tabBarIcon: ({ color, focused }) => (
