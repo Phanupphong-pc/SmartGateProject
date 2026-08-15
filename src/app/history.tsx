@@ -56,7 +56,7 @@ export default function History() {
     const now = getCurrentDate();
 
     try {
-      const response = await fetch("http://10.79.230.211/SmartGate/api/addMember.php", {
+      const response = await fetch("http://10.12.221.211/SmartGate/api/addMember.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

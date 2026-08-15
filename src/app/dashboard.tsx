@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useState } from "react";
 import { FlatList, Image, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-const BASE_URL = "http://10.79.230.211/SmartGate/api";
+const BASE_URL = "http://10.12.221.211/SmartGate/api";
 
 export default function Dashboard() {
     const [members, setMembers] = useState<any[]>([]);

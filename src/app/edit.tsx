@@ -3,7 +3,7 @@ import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const BASE_URL = "http://10.79.230.211/SmartGate/api";
+const BASE_URL = "http://10.12.221.211/SmartGate/api";
 
 export default function MemberEdit() {
     const [searchId, setSearchId] = useState<string>("");
